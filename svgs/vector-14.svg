@@ -1,0 +1,17 @@
+<svg :aria-label="'Living Earth stage: ' + earthStage().name" class="w-full h-full earth-glow" role="img" viewBox="0 0 120 120">
+                      <ellipse cx="60" cy="98" fill="var(--earth-soft)" rx="37" ry="9"></ellipse>
+                      <path d="M60 96V62" stroke="var(--primary)" stroke-linecap="round" stroke-width="5" x-show="journeyPercent() &gt;= 1"></path>
+                      <path d="M60 76C47 72 39 63 40 52c12 0 20 5 23 16" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="2" x-show="journeyPercent() &gt;= 15">
+                      </path>
+                      <path d="M60 67c11-15 22-18 31-15-1 12-10 21-28 22" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="2" x-show="journeyPercent() &gt;= 35">
+                      </path>
+                      <circle cx="37" cy="84" fill="var(--sage)" opacity=".65" r="7" x-show="journeyPercent() &gt;= 55"></circle>
+                      <circle cx="84" cy="88" fill="var(--sage)" opacity=".75" r="9" x-show="journeyPercent() &gt;= 55"></circle>
+                      <path d="M28 96c3-18 10-28 18-30M92 96c-2-20-8-31-17-38" stroke="var(--sage)" stroke-linecap="round" stroke-width="3" x-show="journeyPercent() &gt;= 75">
+                      </path>
+                      <circle cx="91" cy="44" fill="var(--warning)" opacity=".75" r="4" x-show="journeyPercent() &gt;= 90">
+                      </circle>
+                      <path d="M88 44h6M91 41v6" stroke="var(--surface)" stroke-width="1" x-show="journeyPercent() &gt;= 90">
+                      </path>
+                      <ellipse cx="60" cy="97" fill="var(--earth)" rx="8" ry="4" x-show="journeyPercent() &lt; 15"></ellipse>
+                    </svg>

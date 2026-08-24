@@ -1,0 +1,3 @@
+<svg class="w-5 h-5" x-show="theme === 'light'">
+              <use href="#i-moon"></use>
+            </svg>
