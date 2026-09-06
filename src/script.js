@@ -1,5 +1,6 @@
 function zerraApp() {
   return {
+    schemaVersion: 7,
     view: 'home',
     theme: 'light',
     settingsOpen: false,
@@ -10,6 +11,7 @@ function zerraApp() {
     activeChallenge: {},
     globalSearch: '',
     exploreSearch: '',
+    activeDiscoverCollection: '',
     disposalSearch: '',
     journeyArea: '',
     impactFilter: '',
@@ -37,13 +39,21 @@ function zerraApp() {
     swapItemsByCategory: {},
     swapFilterCacheKey: null,
     swapFilterCacheRows: [],
+    groupedSearchCacheKey: null,
+    groupedSearchCacheRows: [],
 
-    profile: { onboarded: false, name: '', path: 'balanced' },
+    profile: { onboarded: true, path: 'balanced' },
     journeyDone: [],
     journeyDoneSet: new Set(),
     saved: [],
     impact: [],
     activity: [],
+    reflections: [],
+    reflectionDraft: '',
+    selectedReconnectId: 'disconnection',
+    foodCycleSearch: '',
+    selectedSeedId: 'bell-pepper',
+    growingContext: 'any',
 
     filters: { category:'', path:'', difficulty:'', cost:'', time:'', sort:'relevance' },
     actionForm: { type:'', quantity:'', note:'', date:'' },
@@ -59,7 +69,92 @@ function zerraApp() {
     itemGuideArea: '',
     itemGuideCategory: '',
 
-    primaryNav: [{"id":"home","label":"Home","icon":"i-home"},{"id":"explore","label":"Explore","icon":"i-compass"},{"id":"journey","label":"Journey","icon":"i-route"},{"id":"impact","label":"Impact","icon":"i-leaf"},{"id":"swaps","label":"Item Guide","icon":"i-swap","short":"Items"}],
+    primaryNav: [
+      {id:'home',label:'Today',icon:'i-home'},
+      {id:'explore',label:'Discover',icon:'i-compass'},
+      {id:'journey',label:'Practice',icon:'i-route'},
+      {id:'impact',label:'My Path',icon:'i-leaf'},
+      {id:'swaps',label:'Search',icon:'i-search'}
+    ],
+
+    lifeFramework: [
+      {id:'longevity',name:'Longevity',summary:'Favor durable practices and conditions that allow life, communities, belongings, and ecosystems to continue.',question:'Will this choice protect or shorten the useful life of what it touches?',practice:'Maintain and repair what already exists. Preserve food, soil, water, knowledge, relationships, and habitat. Choose lasting systems instead of disposable convenience when practical.',relationship:'Longevity looks beyond the immediate moment. It asks whether today’s action leaves people, animals, communities, belongings, and ecosystems able to endure tomorrow.'},
+      {id:'integrity',name:'Integrity',summary:'Show origins, tradeoffs, limitations, and consequences honestly.',question:'What reality, cost, origin, or ripple effect might convenience be hiding from me?',practice:'Learn where something came from, who or what was affected, what it contains, and where it goes after use. Admit uncertainty, local limits, and unavoidable tradeoffs instead of using comforting claims.',relationship:'Integrity reconnects an object or action to its complete story. Nothing simply appears on a shelf, and throwing something away does not make its consequences disappear.'},
+      {id:'flourishing',name:'Flourishing',summary:'Support conditions in which people, animals, communities, and ecosystems can thrive.',question:'Does this merely reduce damage, or does it help life become safer, healthier, freer, and more capable?',practice:'Share resources, protect vulnerable beings, support dignified work, grow food where appropriate, create habitat, teach useful skills, and strengthen mutual care without shaming people for their circumstances.',relationship:'Flourishing is more than survival and more than personal purity. A responsible system should make room for the well-being of oneself, other people, animal brothers and sisters, communities, and Mother Earth.'},
+      {id:'equilibrium',name:'Equilibrium',summary:'Reduce extraction, return what can safely return, and restore more than is consumed where possible.',question:'What am I taking, what can I return, and what relationship needs to be brought back into balance?',practice:'Refuse and reduce unnecessary demand, use resources fully, compost suitable material, replenish soil, repair damage, share abundance, and respect ecological and community limits.',relationship:'Equilibrium recognizes that endless taking is not a relationship. It seeks reciprocity: taking less, returning responsibly, and giving back in ways that are genuinely useful to the living system.'}
+    ],
+
+    discoverCollections: [
+      {id:'reconnect',emoji:'🌎',title:'Reconnect',description:'Explore interdependence, reciprocity, enoughness, origins, and ripple effects.',route:'reconnect'},
+      {id:'normalization',emoji:'🧭',title:'When Harm Becomes Normal',description:'Examine how familiarity, legality, language, institutions, and profit can make harmful systems feel ordinary.',route:'normalization'},
+      {id:'use',emoji:'🧰',title:'Use What You Have',description:'Maintain, repair, repurpose, borrow, share, and buy only when necessary.',query:'use what you have'},
+      {id:'food',emoji:'🌱',title:'Food, Seeds & Soil',description:'Prevent food waste, preserve harvests, grow food, save seeds, and compost.',route:'food-soil'},
+      {id:'repair',emoji:'🔧',title:'Repair, Share & Make',description:'Build useful skills and keep belongings in service longer.',query:'repair'},
+      {id:'materials',emoji:'♻️',title:'Waste & Materials',description:'Understand materials and find their safest, highest-value next use.',route:'disposal'},
+      {id:'restore',emoji:'🤲',title:'Give Back & Restore',description:'Care for soil, water, habitat, neighbors, and local living systems.',query:'community'}
+    ],
+
+    quickActions: [
+      {label:'⌂ At Home',query:'home'},
+      {label:'🍴 Food',query:'food'},
+      {label:'👕 Clothing',query:'clothing'},
+      {label:'▣ Stuff',query:'household'},
+      {label:'🍃 Lifestyle',query:'lifestyle'}
+    ],
+
+    reconnectResponsibilities: [
+      'Treat other living beings as extensions of oneself living another life.',
+      'Give more to Mother Earth than one takes.',
+      'Help living beings and people who cannot adequately protect or provide for themselves.',
+      'Accept responsibility for direct and indirect ripple effects.'
+    ],
+
+    reconnectModules: [
+      {id:'disconnection',number:'01',title:'The Disconnection',opening:'Waste is not only a material problem. It grows when we lose sight of where things come from, who and what made them possible, and where they go after us.',example:'A meal can appear as a package and a receipt while hiding soil, water, seed, labor, transport, other living beings, and the discarded remainder.',deeper:'Reconnection begins by making those relationships visible again. Awareness is not guilt. It is the information needed to act with integrity.',prompts:['What ordinary thing do I use without knowing its story?','Which relationship becomes visible when I slow down and look?'],action:'Choose one thing you use today and trace its life before and after you.',actionQuery:'where things come from',attribution:'Zerra creator framework. The material examples should be checked against reliable product, ecological, labor, and local-system sources.'},
+      {id:'mother-earth',number:'02',title:'Mother Earth as Relationship, Not Commodity',opening:'Mother Earth is not merely a poetic name for raw materials. It names the living relationships that make every human life possible.',example:'Soil is not dirt waiting to be used. It is a living community shaped by organisms, water, air, minerals, decay, and time.',deeper:'A relationship asks more than how much we can extract. It asks how we receive, care, return, repair, and remain accountable to the conditions that sustain life.',prompts:['Where do I experience Earth as a relationship rather than scenery?','What would care look like in that place?'],action:'Spend ten attentive minutes with the land, water, plants, or wildlife where you live before deciding what it needs.',actionQuery:'observe local ecosystem',attribution:'Zerra creator framework. “Mother Earth” is used here as Zerra’s relational language, not attributed to a single Indigenous nation or tradition.'},
+      {id:'interdependence',number:'03',title:'Interdependence',opening:'Nothing sustains itself alone. Bodies, households, communities, species, and ecosystems exist through relationships of dependence and exchange.',example:'A bell pepper depends on seed, soil life, water, sunlight, pollination, climate, growers, transport, and care in the kitchen.',deeper:'Interdependence challenges the fiction that consumption is a private act. Our choices enter living, social, and material systems that extend beyond us.',prompts:['What made my last meal possible?','Who or what carries costs that I rarely see?'],action:'Name five relationships behind one food or object, then care for it accordingly.',actionQuery:'interdependence',attribution:'Zerra synthesis of established ecological and social-system concepts; factual examples require source-specific support.'},
+      {id:'origins',number:'04',title:'Where Things Come From',opening:'Every object has an origin story: living sources, extracted materials, land, water, energy, skill, and labor.',example:'A cotton shirt begins long before a store—with seed, soil, water, farming, fiber processing, dyeing, sewing, transport, and human hands.',deeper:'Knowing origins changes the question from “Can I replace this?” to “How can I honor what is already here and reduce the need to take again?”',prompts:['Which material in my home do I understand least?','Would knowing its origin change how I use or discard it?'],action:'Look up the primary materials and care instructions for one item you already own.',actionQuery:'material origins',attribution:'Factual origin chains must cite current primary, technical, or peer-reviewed sources and distinguish general patterns from a specific product.'},
+      {id:'enoughness',number:'05',title:'Enoughness and the Consumption Machine',opening:'Enoughness means recognizing when a real need has been met. It is an alternative to systems that survive by continually manufacturing dissatisfaction.',example:'A usable phone can be made to feel obsolete by fashion, marketing, software pressure, or the promise that a newer object will change how we feel.',deeper:'Enoughness is not deprivation or romanticized poverty. It respects safety, accessibility, joy, and genuine need while resisting unnecessary extraction and accumulation.',prompts:['Where do I already have enough?','What feeling am I asking a purchase to create?'],action:'Pause one nonessential purchase for seven days and use, repair, borrow, or go without first.',actionQuery:'purchase pause',attribution:'Zerra creator framework informed by anti-consumerist and sufficiency traditions; named cultural or scholarly claims require specific attribution.'},
+      {id:'ripple-effects',number:'06',title:'Responsibility and Ripple Effects',opening:'Every action carries direct and indirect effects, including effects we cannot fully measure or predict.',example:'Throwing away edible food loses the food itself and also the land, water, energy, labor, transport, and opportunity bound up in it.',deeper:'Responsibility does not require perfect knowledge. It requires honest attention, proportionate care, correction when we learn more, and refusal to hide uncertainty.',prompts:['What consequence of one routine have I treated as someone else’s problem?','What is one effect I can responsibly reduce?'],action:'Map one routine as before, during, and after. Change the clearest avoidable harm.',actionQuery:'ripple effects',attribution:'The four responsibilities are the creator’s Life Framework. Quantified impact claims require a defensible method and cited evidence.'},
+      {id:'reciprocity',number:'07',title:'Reciprocity',opening:'Reciprocity asks what we return to the relationships from which we receive.',example:'Food scraps can become contamination in a landfill stream or, where a safe system exists, nutrients returned through compost.',deeper:'Return is not a license to consume without limit. It follows refusal, reduction, continued use, care, repair, sharing, and preservation.',prompts:['What do I receive regularly without giving back?','What form of return is actually useful rather than symbolic?'],action:'Choose one grounded return: share food, compost appropriately, restore soil, offer a skill, or care for a place.',actionQuery:'give back restore',attribution:'Zerra creator framework. Cultural teachings about reciprocity must be attributed to their specific living peoples and appropriate sources.'},
+      {id:'future-generations',number:'08',title:'Future Generations',opening:'Longevity asks whether today’s choices preserve the conditions required for lives beyond our own.',example:'Saving suitable seeds, maintaining fertile soil, teaching repair, and protecting clean water keep knowledge and possibility available.',deeper:'Future responsibility includes children already living, people not yet born, other species, and the ecological communities that cannot represent themselves in our institutions.',prompts:['What am I maintaining that someone else may depend on?','Which skill or resource should not end with me?'],action:'Teach, document, save, repair, or share one useful thing so it can continue beyond you.',actionQuery:'future generations',attribution:'The application of Longevity is part of the creator’s Life Framework; external cultural claims require specific attribution.'},
+      {id:'place',number:'09',title:'Relationship with Place',opening:'There is no universal zero-waste routine detached from place. Climate, watershed, species, housing, infrastructure, law, and community shape responsible action.',example:'A yard, balcony, apartment, rural property, and shared building offer different safe possibilities for composting, habitat, food growing, and water care.',deeper:'Place-based practice begins with observation and authoritative local knowledge. It avoids scattering unknown seeds, importing invasive species, or treating one city’s rules as universal.',prompts:['What watershed, soil, and living community am I part of?','Which local rule or service do I need to verify?'],action:'Identify your watershed and one official local source for waste, growing, or habitat guidance.',actionQuery:'local official guidance',attribution:'Local claims must include jurisdiction, date, and an official source. Indigenous place knowledge requires nation-specific attribution and respectful use.'},
+      {id:'restoration',number:'10',title:'From Less Harm to Restoration',opening:'Reducing harm matters, but relationship calls us beyond a smaller footprint toward repair, care, and conditions where life can flourish.',example:'Using less water is valuable. Protecting soil, slowing runoff, supporting suitable habitat, and organizing for clean water move toward restoration.',deeper:'Restoration should respond to the place and the beings involved, not become another shopping identity. Start with observation, existing resources, community knowledge, and work that is genuinely needed.',prompts:['Where can I move from avoiding harm to supporting life?','Who already knows and cares for this place?'],action:'Join or begin one practical act of care for soil, water, habitat, a neighbor, or another living being.',actionQuery:'restore your place',attribution:'Zerra creator framework. Ecological interventions require locally appropriate evidence, permission, safety review, and community knowledge.'}
+    ],
+
+    seedProfiles: [
+      {id:'bell-pepper',name:'Bell pepper',emoji:'🫑',keywords:['pepper','capsicum','sweet pepper','bell pepper seeds'],edible:'Yes. The seeds and pale inner ribs are commonly edible, though texture and flavor may be less desirable.',maturity:'For seed saving, use fully mature fruit with its final ripe color rather than an immature green pepper.',saveable:'Good beginner candidate, especially from a known open-pollinated variety.',genetics:'Peppers are largely self-pollinating but can cross with compatible nearby peppers. Hybrid fruit can produce viable seed, but offspring may differ from the parent.',cleaning:'Remove seeds from healthy ripe fruit, separate pulp, and spread them in a thin layer.',drying:'Air-dry completely in a ventilated, shaded place before storage; avoid sealing seeds that still bend or feel moist.',storage:'Label variety and year; keep airtight only after fully dry, then store cool, dark, and dry.',planting:'Start indoors or sow according to local frost dates and the variety packet. Pepper seeds need warmth; transplant only after cold risk has passed.',share:'Share when the variety and any hybrid or cross-pollination uncertainty are clearly labeled.',compost:'Compost unwanted pepper seeds and scraps where the system accepts food scraps.',cautions:'Do not save from diseased fruit. Hot-pepper residue can irritate skin and eyes; keep varieties labeled. Never scatter saved seeds into unmanaged land.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'tomato',name:'Tomato',emoji:'🍅',keywords:['tomato seeds','roma','cherry tomato'],edible:'Yes. Tomato seeds are ordinarily eaten with the fruit.',maturity:'Choose a fully ripe, healthy tomato from a plant with desirable traits.',saveable:'Good beginner candidate from open-pollinated varieties. Fermentation is commonly used to remove the gel around seeds.',genetics:'Most tomatoes self-pollinate. Open-pollinated varieties are more predictable; hybrid offspring may vary.',cleaning:'Squeeze seed and gel into a labeled container, use a short controlled fermentation method from an extension guide, rinse, then separate sound seed.',drying:'Dry cleaned seed thoroughly in a thin layer with airflow, out of harsh heat.',storage:'Label variety and year; store fully dry seed in a cool, dark, dry place.',planting:'Start or sow using local frost dates and variety-specific timing; tomatoes are cold-sensitive.',share:'Share with variety, year, and hybrid status or uncertainty.',compost:'Compost skins, pulp, and unwanted seeds in an appropriate system.',cautions:'Discard seed from diseased fruit when seedborne disease is possible. Do not treat grocery fruit as a known stable variety.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'pumpkin',name:'Pumpkin',emoji:'🎃',keywords:['pumpkin seeds','pepitas','gourd seeds'],edible:'Many culinary pumpkin seeds are edible when cleaned and roasted, but hull thickness varies. Do not eat seeds from unknown ornamental gourds.',maturity:'Use a fully mature, healthy pumpkin. Seed continues developing as the fruit matures.',saveable:'Possible, but pumpkins readily cross with compatible squash of the same species.',genetics:'Insects cross-pollinate pumpkins, squash, and gourds. Saved offspring may not resemble the parent, especially from hybrids or nearby compatible varieties.',cleaning:'Scoop seeds, separate strings and pulp, wash, and sort out damaged seed.',drying:'For planting seed, dry fully with airflow before storage. For eating, use a food-safe roasting method rather than seed-storage instructions.',storage:'Keep planting seed labeled, cool, dark, and dry. Keep edible roasted seed in food-safe storage.',planting:'Use the known species and local frost/season guidance; vine crops need adequate warm-season time and space.',share:'Share only with species/variety and cross-pollination uncertainty disclosed.',compost:'Compost pulp and unsuitable seeds; manage volunteers if whole seeds survive a cool pile.',cautions:'Unknown ornamental gourds can contain bitter cucurbitacins and should not be eaten. Extremely bitter cucurbit fruit should not be consumed.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'winter-squash',name:'Winter squash',emoji:'🍂',keywords:['squash seeds','butternut','acorn squash'],edible:'Seeds from ordinary edible winter squash can generally be cleaned and roasted.',maturity:'Save only from fully mature, healthy edible squash.',saveable:'Possible, but identity is uncertain when compatible squash grew nearby or the fruit was hybrid.',genetics:'Squash cross-pollinate within compatible species; the current fruit is unaffected, but saved-seed offspring can differ.',cleaning:'Separate seed from pulp, wash, and select full undamaged seeds.',drying:'Dry planting seed completely with ventilation before sealing.',storage:'Label the squash type, source, year, and uncertainty; keep cool, dark, and dry.',planting:'Match species, space, and growing-season needs to local conditions; container growing requires a genuinely large container and suitable variety.',share:'Disclose unknown grocery origin, hybrid status, and cross-pollination risk.',compost:'Compost scraps and unsuitable seeds where accepted.',cautions:'Do not eat unknown ornamental gourd seeds or intensely bitter cucurbit fruit. Avoid saving diseased seed.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'cucumber',name:'Cucumber',emoji:'🥒',keywords:['cucumber seeds','pickle seeds'],edible:'Yes. Immature cucumber seeds are normally eaten with the fruit.',maturity:'Seed-saving cucumbers must mature far beyond the ordinary eating stage until large and fully ripe.',saveable:'Possible from open-pollinated plants when crossing is controlled or accepted.',genetics:'Cucumbers are insect-pollinated and can cross with compatible cucumber varieties; hybrid offspring may vary.',cleaning:'Use an extension-recommended wet seed extraction or fermentation method, rinse, and separate mature seed.',drying:'Dry cleaned seed thoroughly in a ventilated shaded place.',storage:'Label variety, year, and isolation/crossing conditions; store cool, dark, and dry.',planting:'Sow after soil warms and frost risk passes, using local timing and container/space needs.',share:'Share only with honest cross-pollination and variety notes.',compost:'Compost eating-stage seeds, peels, ends, and unsuitable mature seed.',cautions:'Do not save from diseased plants. Do not eat unusually bitter cucumbers.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'melon',name:'Melon',emoji:'🍈',keywords:['melon seeds','cantaloupe','watermelon seeds'],edible:'Some melon and watermelon seeds are edible when properly cleaned and prepared; culinary use varies by species and tradition.',maturity:'Use fully ripe healthy fruit for mature seed.',saveable:'Possible, but melons are insect-pollinated and variety purity may require isolation or controlled pollination.',genetics:'Compatible varieties can cross. Hybrid or crossed offspring may differ from the purchased fruit.',cleaning:'Separate seed from pulp, wash well, and discard empty or damaged seed.',drying:'Dry planting seed fully with airflow before storage.',storage:'Label species, variety/source, year, and uncertainty; store cool, dark, and dry.',planting:'Warm-season crop; use local frost dates, days-to-maturity, and realistic space or container requirements.',share:'Share only with accurate identity and crossing notes.',compost:'Compost rinds, pulp, and unsuitable seed where accepted.',cautions:'Do not assume seeds from an unknown decorative or bitter cucurbit are edible.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'beans-peas',name:'Beans and peas',emoji:'🫘',keywords:['bean seeds','pea seeds','dry beans','green beans'],edible:'Yes when the crop and preparation are known. Some dry beans require thorough cooking and should never be eaten raw.',maturity:'For planting seed, leave healthy pods on the plant until fully mature and dry when weather allows.',saveable:'Among the easier crops for beginners because beans and peas are generally self-pollinating.',genetics:'Open-pollinated varieties are most predictable, though occasional crossing can occur. Hybrid status should still be known where possible.',cleaning:'Shell fully dry healthy pods and remove damaged, moldy, or insect-damaged seed.',drying:'Ensure seed is thoroughly dry before sealed storage.',storage:'Label variety and year; keep cool, dark, dry, and protected from moisture and pests.',planting:'Direct sow according to local soil temperature, frost timing, and variety instructions.',share:'Share clean seed with variety, year, and any disease or crossing concerns disclosed.',compost:'Compost healthy empty pods; diseased material may require another locally recommended route.',cautions:'Do not eat unknown beans raw. Seedborne disease can persist; avoid saving from symptomatic plants.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'sunflower',name:'Sunflower',emoji:'🌻',keywords:['sunflower seeds','sunflower head'],edible:'Seeds from known edible sunflower varieties can be eaten raw or roasted after appropriate cleaning; shells can be composted where accepted.',maturity:'Allow the back of the flower head to yellow or brown and seeds to become plump and firm while protecting from wildlife as appropriate.',saveable:'Yes from healthy mature open-pollinated plants, but crossing between varieties is common through insects.',genetics:'Sunflowers are insect-pollinated; offspring can vary when multiple varieties flower nearby.',cleaning:'Rub or remove mature seeds from a dry head and sort out damaged or moldy seed.',drying:'Dry thoroughly before food or planting storage to prevent mold.',storage:'Separate eating and planting seed; label planting seed and keep both cool and dry in appropriate containers.',planting:'Choose a variety and location suited to height, sun, season, containers, and local rules.',share:'Share only clean, dry seed with variety and crossing uncertainty labeled.',compost:'Compost shells and healthy plant remains if the local system accepts them.',cautions:'Inspect carefully for mold. Do not plant unknown seed into natural areas or where sunflower may conflict with land-management goals.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'apple',name:'Apple',emoji:'🍎',keywords:['apple seeds','apple core'],edible:'Do not intentionally eat quantities of apple seeds. The flesh is food; cores and seeds are better directed to compost where appropriate.',maturity:'Seeds from a ripe apple may be mature, but maturity does not make them true to the parent variety.',saveable:'Biologically possible but usually unsuitable for reproducing the apple you ate.',genetics:'Apples do not come true from seed; named varieties are normally propagated by grafting. A seedling can take years and produce very different fruit.',cleaning:'If growing experimentally, clean away fruit residue and follow species-specific dormancy guidance from a reliable horticultural source.',drying:'Do not assume ordinary dry-storage methods alone prepare apple seed for germination.',storage:'Label as experimental seed with parent fruit/source and date.',planting:'Only plant where a full-size long-lived tree is permitted and appropriate; verify rootstock, space, chill, disease, and local conditions first.',share:'Share as experimental genetic material, never as a promise of the parent variety.',compost:'Compost cores and seeds in an accepted system.',cautions:'Avoid intentional seed consumption; confirm toxicity and planting guidance through authoritative health and extension sources.',outcomes:['saveable','plantable','shareable','compostable','unsuitable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']},
+      {id:'avocado',name:'Avocado',emoji:'🥑',keywords:['avocado pit','avocado seed'],edible:'The flesh is edible. Zerra does not recommend eating the pit; common online claims about pit consumption require stronger safety evidence.',maturity:'A pit from ripe fruit may germinate, but grocery origin and cultivar are usually uncertain.',saveable:'Possible as an experiment, not a reliable way to reproduce purchased fruit.',genetics:'Seed-grown avocado does not reliably reproduce the parent cultivar and may never fruit indoors or in an unsuitable climate.',cleaning:'Rinse the pit without cutting deeply into it.',drying:'Planting methods commonly begin with a fresh pit rather than long dry storage.',storage:'If delayed briefly, prevent mold and keep the source/date labeled; use an extension method.',planting:'A large tropical/subtropical tree; treat indoor growth as a houseplant experiment unless climate, space, and long-term care are suitable.',share:'Describe it as an experimental seedling, not a guaranteed fruit tree.',compost:'Compost the pit where the system handles large food scraps, or dispose according to local organics guidance.',cautions:'Do not plant outdoors where climate or invasive-risk guidance says it is inappropriate. Avoid unsupported food or medicinal claims about the pit.',outcomes:['plantable','shareable','compostable','unsuitable'],sources:['https://www.epa.gov/recycle/composting-home']},
+      {id:'citrus',name:'Citrus',emoji:'🍋',keywords:['lemon seeds','orange seeds','lime seeds','citrus seeds'],edible:'The juice, flesh, and zest of appropriate clean fruit have culinary uses. Seeds are not normally treated as food.',maturity:'Fresh mature seeds may germinate; dried grocery seeds often lose viability.',saveable:'Possible for experimentation, not reliable cultivar reproduction.',genetics:'Seedlings can differ from the fruit source and may take years to flower or fruit; many commercial trees are grafted.',cleaning:'Rinse pulp from fresh seed and use a reliable citrus propagation method promptly.',drying:'Do not assume full drying is appropriate; citrus seed handling differs from dry-stored vegetable seed.',storage:'Short-term handling should prevent mold and desiccation; label source and date.',planting:'Often best as a container plant outside suitable climates; provide drainage, light, room, and winter protection.',share:'Share as an experimental seedling with unknown fruit outcome.',compost:'Compost peels and unsuitable seeds where accepted; worm bins may tolerate citrus poorly in large amounts.',cautions:'Check local citrus disease/quarantine rules before moving plants or material between regions.',outcomes:['plantable','shareable','compostable','unsuitable'],sources:['https://www.epa.gov/recycle/composting-home']},
+      {id:'strawberry',name:'Strawberry',emoji:'🍓',keywords:['strawberry seeds','strawberry tops'],edible:'Yes. The small fruits on the outside are eaten with the berry.',maturity:'Seed from ripe fruit may be mature, but store fruit rarely provides useful variety information.',saveable:'Possible but slow and unpredictable compared with propagating runners from a known healthy plant.',genetics:'Seedlings may differ from the parent, especially from hybrid commercial fruit.',cleaning:'Use a reliable small-seed extraction method and avoid damaging the tiny seed.',drying:'Dry cleaned seed carefully before storage if the selected propagation method calls for dry seed.',storage:'Label source/date and follow variety-specific cold-treatment guidance where applicable.',planting:'Tiny seedlings need careful moisture and light; containers can work well when drainage and winter needs are met.',share:'Share with unknown/hybrid status disclosed.',compost:'Compost tops, spoiled fruit, and unsuitable seed.',cautions:'Do not assume grocery seed will produce the same berry. Avoid propagating diseased plants.',outcomes:['edible','saveable','plantable','shareable','compostable'],sources:['https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/saving-vegetable-seeds']}
+    ],
+
+    compostSystems: [
+      {id:'prevent',name:'Prevent first',fit:'Every household',accepts:'Edible food kept in human use through planning, storage, preservation, sharing, or donation.',limits:'Food safety comes first; do not donate spoiled, temperature-abused, or partially eaten food.',source:'https://www.epa.gov/recycle/preventing-wasted-food-home'},
+      {id:'backyard',name:'Backyard compost',fit:'Yard or permitted shared space',accepts:'Fruit and vegetable scraps, coffee grounds, suitable yard trimmings, and browns such as dry leaves.',limits:'Typical home piles should exclude meat, bones, dairy, fats, pet waste, and diseased plants unless authoritative local guidance and the system say otherwise.',source:'https://www.epa.gov/recycle/composting-home'},
+      {id:'worms',name:'Indoor worm bin',fit:'Apartments and small spaces',accepts:'Many fruit and vegetable scraps, coffee grounds and filters, and suitable paper bedding in controlled amounts.',limits:'Avoid overfeeding; EPA guidance advises avoiding meat, dairy, greasy foods, bones, pet waste, and large amounts of citrus, onions, or garlic.',source:'https://www.epa.gov/recycle/composting-home'},
+      {id:'municipal',name:'Curbside or drop-off organics',fit:'Where a verified local program exists',accepts:'Only materials listed by the local collector; some facilities accept items that home systems do not.',limits:'Rules vary. Never assume “compostable” packaging, meat, bones, or dairy are accepted. Verify current local instructions.',source:'https://www.epa.gov/sustainable-management-food/approaches-composting'},
+      {id:'community',name:'Community composting',fit:'Renters, neighborhoods, schools, gardens',accepts:'Locally specified food scraps and organics kept within a community-scale system.',limits:'Confirm membership, contamination rules, hours, transport, and whether finished compost returns to participants or local land.',source:'https://www.epa.gov/sustainable-management-food/approaches-composting'}
+    ],
+
+    restorationPractices: [
+      {id:'container-food',title:'Grow food in a container',contexts:['renter','balcony','indoor','yard'],summary:'Use an existing food-safe container with drainage when appropriate, match crop size to root space and light, and follow building rules.'},
+      {id:'seed-library',title:'Use or support a seed library',contexts:['renter','balcony','indoor','yard','community'],summary:'Borrow, return, donate, or help label locally useful seed while respecting variety, disease, and cross-pollination information.'},
+      {id:'community-garden',title:'Join a community garden',contexts:['renter','community'],summary:'Share land, tools, knowledge, food, compost, and responsibility where private growing space is unavailable.'},
+      {id:'native-container',title:'Create suitable native habitat in containers',contexts:['renter','balcony','yard'],summary:'Choose regionally native plants matched to light, moisture, container size, and building rules; never collect plants from the wild without permission.'},
+      {id:'pollinator-care',title:'Support pollinators responsibly',contexts:['balcony','yard','community'],summary:'Favor locally native, pesticide-aware, season-spanning plantings and provide habitat without introducing invasive species.'},
+      {id:'watershed',title:'Learn your watershed',contexts:['renter','balcony','indoor','yard','community'],summary:'Identify where rain and drains flow, then use official local guidance to reduce pollution and support water care.'},
+      {id:'litter',title:'Remove litter safely',contexts:['renter','yard','community'],summary:'Use gloves and appropriate tools; avoid needles, chemicals, traffic hazards, unstable banks, and unknown dangerous material; report hazards.'},
+      {id:'policy',title:'Improve a local rule or service',contexts:['renter','yard','community'],summary:'Verify the exact ordinance or service, document its effect, find existing programs, and organize constructively for gardens, habitat, composting, repair, or sharing.'}
+    ],
 
     paths: [
       {
@@ -80,8 +175,10 @@ function zerraApp() {
     ],
 
     actionTypes: [
-      'Refused','Reduced','Reused','Repaired','Repurposed','Shared/Donated',
-      'Composted','Recycled','Disposed Responsibly','Bought Secondhand','Prevented Food Waste'
+      'Refused','Reduced','Continued Using','Maintained','Reused','Repaired','Repurposed',
+      'Shared/Donated','Borrowed','Preserved Food','Saved/Shared Seeds','Grew Food/Habitat',
+      'Composted','Recycled','Disposed Responsibly','Bought Secondhand',
+      'Prevented Food Waste','Helped Someone/An Animal','Cared for a Place','Practiced a Skill'
     ],
 
     exploreCategories: [
@@ -2155,7 +2252,23 @@ function zerraApp() {
     ],
 
     buildSearchIndexes() {
+      const normalize = value => String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+      const stableHash = value => {
+        let hash = 2166136261;
+        for (const char of value) hash = Math.imul(hash ^ char.charCodeAt(0), 16777619);
+        return (hash >>> 0).toString(36);
+      };
+      const collectionFor = item => {
+        const text = normalize(`${item.category} ${item.title}`);
+        if (/food|cook|preserv|compost|soil|garden|grow|seed/.test(text)) return 'food-soil';
+        if (/repair|maintain|mend|care|reuse|repurpose/.test(text)) return 'care-repair';
+        if (/community|share|borrow|donat|mutual|neighbor/.test(text)) return 'community';
+        if (/resource|guide|research|safety|local rule/.test(text)) return 'guides';
+        if (/refuse|reduce|consum|buy less|enough/.test(text)) return 'refuse-reduce';
+        return 'everyday';
+      };
       this.exploreItems.forEach(i => {
+        i.collectionId = i.collectionId || collectionFor(i);
         i._search = `${i.title} ${i.summary} ${i.category} ${(i.steps||[]).join(' ')}`.toLowerCase();
       });
       this.disposalItems.forEach(i => {
@@ -2163,19 +2276,51 @@ function zerraApp() {
         i._keywords = (i.keywords || []).map(k => k.toLowerCase());
       });
       this.swapItems.forEach(i => {
+        if (/and the waste or consumption associated with replacing or using it routinely/i.test(i.description || '')) {
+          const category = this.swapCategories.find(category=>category.id===i.categoryId)?.name || 'everyday life';
+          i.description = `${i.name} within ${category.toLowerCase()}: compare using up what exists, reducing demand, extending useful life, sharing, and responsible return before buying a replacement.`;
+        }
         i._search = `${i.name} ${i.description} ${(i.keywords||[]).join(' ')} ${(i.tags||[]).join(' ')}`.toLowerCase();
       });
-      this.itemGuideItems.forEach(i => { i._search = `${i.name} ${i.summary||''} ${i.area||''} ${i.category||''} ${(i.keywords||[]).join(' ')}`.toLowerCase(); });
+      const guideByName = new Map();
+      this.itemGuideItems.forEach(i => {
+        i._search = `${i.name} ${i.summary||''} ${i.area||''} ${i.category||''} ${(i.keywords||[]).join(' ')}`.toLowerCase();
+        const key = normalize(i.name);
+        const canonical = guideByName.get(key);
+        if (canonical) {
+          i.canonicalId = canonical.id;
+          canonical.aliasIds.push(i.id);
+          canonical.keywords = [...new Set([...(canonical.keywords || []), ...(i.keywords || [])])];
+          canonical.disposalIds = [...new Set([...(canonical.disposalIds || []), ...(i.disposalIds || [])])];
+          if (!canonical.swapItemId && i.swapItemId) canonical.swapItemId = i.swapItemId;
+        } else {
+          i.canonicalId = i.id;
+          i.aliasIds = [];
+          guideByName.set(key, i);
+        }
+      });
+      this.canonicalItemGuideItems = [...guideByName.values()];
       this.swapAlternativesByItem = {};
+      const strategyById = new Map();
       this.swapAlternatives.forEach(a => {
+        a.strategyId = `strategy-${stableHash(normalize(`${a.type} ${a.description}`))}`;
+        if (!strategyById.has(a.strategyId)) strategyById.set(a.strategyId, {id:a.strategyId,type:a.type,description:a.description});
         (this.swapAlternativesByItem[a.itemId] ||= []).push(a);
       });
+      this.alternativeStrategies = [...strategyById.values()];
       this.swapCategoryById = Object.fromEntries(this.swapCategories.map(c => [c.id,c]));
       this.swapAreaById = Object.fromEntries(this.swapAreas.map(a => [a.id,a]));
       this.swapItemsByCategory = {};
       this.swapItems.forEach(i => {
         (this.swapItemsByCategory[i.categoryId] ||= []).push(i);
       });
+      this.knowledgeStats = {
+        subjects: this.canonicalItemGuideItems.length,
+        aliasesConsolidated: this.itemGuideItems.length - this.canonicalItemGuideItems.length,
+        sharedStrategies: this.alternativeStrategies.length,
+        guides: this.exploreItems.length,
+        disposal: this.disposalItems.length
+      };
     },
 
     init() {
@@ -2185,6 +2330,8 @@ function zerraApp() {
   });
   this.buildSearchIndexes();
   this.load();
+  // Zerra now opens directly into Today. Personalization remains optional in Settings.
+  this.profile.onboarded = true;
   document.documentElement.dataset.theme = this.theme;
   this.journeyDoneSet = new Set(this.journeyDone);
   this.actionForm.date = this.todayISO();
@@ -2205,8 +2352,8 @@ function zerraApp() {
   // Watch all relevant state keys to auto-save on change
   const persistWatchedState = () => this.persist();
   [
-    'profile.name', 'profile.path', 'profile.onboarded',
-    'journeyDone', 'saved', 'impact', 'activity', 'theme',
+    'profile.path', 'profile.onboarded',
+    'journeyDone', 'saved', 'impact', 'activity', 'reflections', 'theme',
     'view', 'globalSearch', 'exploreSearch',
     'filters.category', 'filters.path', 'filters.difficulty',
     'filters.cost', 'filters.time', 'filters.sort',
@@ -2215,6 +2362,7 @@ function zerraApp() {
     'swapsSelectedArea', 'swapsSelectedCategory', 'swapsSelectedItem',
     'itemGuideSearch', 'itemGuideArea', 'itemGuideCategory',
     'itemGuideSelected',
+    'foodCycleSearch', 'selectedSeedId', 'growingContext',
     'actionForm.type', 'actionForm.quantity', 'actionForm.note', 'actionForm.date'
   ].forEach(key => this.$watch(key, persistWatchedState));
 
@@ -2259,23 +2407,34 @@ function zerraApp() {
       const data = JSON.parse(zerraApp);
       console.log('✅ Zerra data loaded:', data); // optional
 
-      if (data.profile) this.profile = { ...this.profile, ...data.profile };
+      if (data.profile) {
+        this.profile = {
+          onboarded: true,
+          path: ['modern','balanced','earthbound'].includes(data.profile.path) ? data.profile.path : 'balanced'
+        };
+      }
       if (Array.isArray(data.journeyDone)) this.journeyDone = data.journeyDone;
       if (Array.isArray(data.saved)) this.saved = data.saved;
       if (Array.isArray(data.impact)) this.impact = data.impact;
       if (Array.isArray(data.activity)) this.activity = data.activity;
+      if (Array.isArray(data.reflections)) this.reflections = data.reflections;
       if (data.theme === 'dark' || data.theme === 'light') this.theme = data.theme;
 
       // Restore UI state
       if (data.ui) {
         const ui = data.ui;
-        this.view = ui.view || 'home';
+        const legacyViews = {home:'home',explore:'explore',disposal:'disposal',journey:'journey',impact:'impact',swaps:'swaps',saved:'saved'};
+        this.view = legacyViews[ui.view] || 'home';
+        if (ui.view === 'disposal') this.disposalSearch = ui.disposalSearch || '';
         this.globalSearch = ui.globalSearch || '';
         this.exploreSearch = ui.exploreSearch || '';
         if (ui.filters) this.filters = { ...this.filters, ...ui.filters };
         this.disposalSearch = ui.disposalSearch || '';
         this.journeyArea = ui.journeyArea || '';
         this.impactFilter = ui.impactFilter || '';
+        this.foodCycleSearch = ui.foodCycleSearch || '';
+        this.selectedSeedId = this.seedProfiles.some(profile=>profile.id===ui.selectedSeedId) ? ui.selectedSeedId : 'bell-pepper';
+        this.growingContext = ['any','renter','balcony','indoor','yard','community'].includes(ui.growingContext) ? ui.growingContext : 'any';
         if (ui.actionForm && typeof ui.actionForm === 'object') {
           this.actionForm = { ...this.actionForm, ...ui.actionForm };
         }
@@ -2321,13 +2480,14 @@ function zerraApp() {
   if (this._isResetting) return;
 
   const zerraApp = {
-    schemaVersion: 2,
+    schemaVersion: this.schemaVersion,
     savedAt: new Date().toISOString(),
-    profile: { ...this.profile },
+    profile: { onboarded: true, path: this.profile.path },
     journeyDone: [...this.journeyDone],
     saved: [...this.saved],
     impact: [...this.impact],
     activity: [...this.activity],
+    reflections: [...this.reflections],
     theme: this.theme,
     ui: {
       view: this.view,
@@ -2338,6 +2498,9 @@ function zerraApp() {
       journeyArea: this.journeyArea,
       impactFilter: this.impactFilter,
       actionForm: { ...this.actionForm },
+      foodCycleSearch: this.foodCycleSearch,
+      selectedSeedId: this.selectedSeedId,
+      growingContext: this.growingContext,
 
       // Swaps & Alternatives full state
       swapsView: this.swapsView,
@@ -2371,10 +2534,125 @@ function zerraApp() {
     },
 
     go(id) {
-      if (!this.primaryNav.some(n => n.id === id) && id !== 'saved') return;
+      if (!this.primaryNav.some(n => n.id === id) && !['saved','disposal','reconnect','food-soil','normalization'].includes(id)) return;
       this.view=id;
       this.persist();
       window.scrollTo({top:0,behavior:'smooth'});
+    },
+
+    navActive(id) {
+      if (id === 'explore') return ['explore','disposal','reconnect','food-soil','normalization'].includes(this.view);
+      if (id === 'impact') return ['impact','saved'].includes(this.view);
+      return this.view === id;
+    },
+
+    openCollection(collection) {
+      if (collection.route) {
+        this.go(collection.route);
+        return;
+      }
+      this.exploreSearch=collection.query || '';
+      this.activeDiscoverCollection=collection.title;
+      this.filters={category:'',path:'',difficulty:'',cost:'',time:'',sort:'relevance'};
+      this.persist();
+      this.$nextTick(() => {
+        document.getElementById?.('discover-results')?.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    },
+
+    selectedReconnectModule() {
+      return this.reconnectModules.find(module => module.id === this.selectedReconnectId) || this.reconnectModules[0];
+    },
+
+    selectReconnect(id) {
+      if (!this.reconnectModules.some(module => module.id === id)) return;
+      this.selectedReconnectId = id;
+      this.reflectionDraft = '';
+      window.scrollTo({top:0,behavior:'smooth'});
+    },
+
+    runReconnectAction(module) {
+      this.globalSearch = module.actionQuery || module.title;
+      this.searchEverything();
+    },
+
+    saveReflection(module) {
+      const note = this.reflectionDraft.trim();
+      if (!note) return;
+      const entry = {id:'reflection-'+Date.now(),moduleId:module.id,moduleTitle:module.title,note:note.slice(0,1200),date:new Date().toISOString()};
+      this.reflections.unshift(entry);
+      this.activity.unshift({uid:'activity-'+entry.id,label:`Reflected: ${module.title}`,date:entry.date});
+      this.reflectionDraft='';
+      this.persist();
+    },
+
+    deleteReflection(id) {
+      this.reflections = this.reflections.filter(entry => entry.id !== id);
+      this.persist();
+    },
+
+    filteredSeedProfiles() {
+      const q = this.foodCycleSearch.trim().toLowerCase();
+      if (!q) return this.seedProfiles;
+      const terms = q.split(/\s+/).filter(Boolean);
+      return this.seedProfiles.filter(profile => {
+        const hay = `${profile.name} ${(profile.keywords||[]).join(' ')} ${profile.edible} ${profile.saveable} ${profile.compost}`.toLowerCase();
+        return terms.every(term => hay.includes(term));
+      });
+    },
+
+    selectedSeedProfile() {
+      return this.seedProfiles.find(profile => profile.id === this.selectedSeedId) || this.filteredSeedProfiles()[0] || this.seedProfiles[0];
+    },
+
+    seedProfileForQuery(query) {
+      const q = String(query || '').trim().toLowerCase();
+      if (!q) return null;
+      return this.seedProfiles.find(profile => profile.name.toLowerCase().includes(q) || (profile.keywords||[]).some(keyword => keyword.toLowerCase().includes(q) || q.includes(keyword.toLowerCase()))) || null;
+    },
+
+    goVeganContextForQuery(query) {
+      const q = String(query || '').trim().toLowerCase();
+      if (!q) return null;
+      const contexts = [
+        {terms:['meat','beef','steak','hamburger','pork','bacon','ham','chicken','turkey','fish','seafood'],title:'Food from animals',detail:'Explore the living beings, ethics, nutrition, and plant-based alternatives behind animal-derived foods.'},
+        {terms:['milk','dairy','cheese','butter','cream','yogurt','egg','mayonnaise','mayo','honey'],title:'Animal-derived ingredient',detail:'Find plant-based replacements, recipes, nutrition guidance, and the animal relationship behind this ingredient.'},
+        {terms:['leather','wool','fur','silk','feather','down'],title:'Animal-derived material',detail:'Compare animal use, everyday products, and practical alternatives while Zerra handles care and end of life.'}
+      ];
+      return contexts.find(context=>context.terms.some(term=>q.includes(term))) || null;
+    },
+
+    openSeedFromSearch(profile) {
+      if (!profile) return;
+      this.foodCycleSearch = profile.name;
+      this.selectedSeedId = profile.id;
+      this.go('food-soil');
+    },
+
+    selectSeed(profile) {
+      this.selectedSeedId = profile.id;
+      this.persist();
+    },
+
+    filteredRestorationPractices() {
+      if (this.growingContext === 'any') return this.restorationPractices;
+      return this.restorationPractices.filter(practice => practice.contexts.includes(this.growingContext));
+    },
+
+    logPhaseFourAction(type, note) {
+      const entry={id:'impact-'+Date.now(),type,quantity:'',note,date:this.todayISO(),createdAt:new Date().toISOString()};
+      this.impact.unshift(entry);
+      this.activity.unshift({uid:'activity-'+entry.id,label:`Logged: ${type}`,date:entry.createdAt});
+      this.persist();
+    },
+
+    runQuickAction(action) {
+      if (action.route) {
+        this.go(action.route);
+        return;
+      }
+      this.globalSearch=action.query || '';
+      this.searchEverything();
     },
 
     closeModals() {
@@ -2386,9 +2664,28 @@ function zerraApp() {
 
     toggleTheme() { this.setTheme(this.theme === 'light' ? 'dark' : 'light'); },
 
+    async shareApp() {
+      const shareData = {
+        title: 'Zerra',
+        text: 'Rethink Waste. Reconnect with Earth.',
+        url: window.location.href
+      };
+      try {
+        if (navigator.share) await navigator.share(shareData);
+        else if (navigator.clipboard) {
+          await navigator.clipboard.writeText(shareData.url);
+          window.alert('Zerra link copied.');
+        }
+      } catch (error) {
+        if (error?.name !== 'AbortError') console.warn('Zerra could not be shared.', error);
+      }
+    },
+
     setTheme(theme) {
       this.theme=theme === 'dark' ? 'dark' : 'light';
       document.documentElement.dataset.theme=this.theme;
+      const color=this.theme==='dark' ? '#101914' : '#f5f1e8';
+      document.querySelectorAll('meta[name="theme-color"], meta[name="msapplication-navbutton-color"]').forEach(meta=>meta.setAttribute('content',color));
       this.persist();
     },
 
@@ -2399,7 +2696,7 @@ function zerraApp() {
     greeting() {
       const hour = new Date().getHours();
       const part = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-      return this.profile.name ? `${part}, ${this.profile.name}.` : `${part}.`;
+      return `${part}.`;
     },
 
     todayISO() {
@@ -2429,7 +2726,7 @@ function zerraApp() {
 
     filteredItemGuide() {
       const q=(this.itemGuideSearch||'').trim().toLowerCase();
-      let rows=this.itemGuideItems;
+      let rows=this.canonicalItemGuideItems || this.itemGuideItems;
       if (this.itemGuideArea) rows=rows.filter(i=>i.areaId===this.itemGuideArea);
       if (this.itemGuideCategory) rows=rows.filter(i=>i.categoryId===this.itemGuideCategory);
       if (!q) return rows.slice(0,80);
@@ -2472,10 +2769,49 @@ function zerraApp() {
     itemGuideAlternatives(item) { if(!item||!item.swapItemId)return []; return (this.swapAlternativesByItem[item.swapItemId] || []).sort((a,b)=>(a.priority||99)-(b.priority||99)); },
     itemGuideDisposal(item) { if(!item)return []; return (item.disposalIds||[]).map(id=>this.disposalItems.find(d=>d.id===id)).filter(Boolean); },
 
+    groupedSearchResults() {
+      const query = (this.swapsSearch || '').trim().toLowerCase();
+      if (!query) return [];
+      const cacheKey = `${query}|${this.swapsFilter}|${this.swapsPriority}`;
+      if (cacheKey === this.groupedSearchCacheKey) return this.groupedSearchCacheRows;
+      const terms = query.split(/\s+/).filter(Boolean);
+      const match = text => terms.every(term => String(text || '').toLowerCase().includes(term));
+      const groups = [
+        {id:'items', label:'Items & everyday choices', rows:this.filteredSwapItems().slice(0,6), title:i=>i.name, detail:i=>i.description},
+        {id:'guides', label:'Practical guides', rows:this.exploreItems.filter(i=>match(i._search)).slice(0,6), title:i=>i.title, detail:i=>i.summary},
+        {id:'disposal', label:'Return & responsible disposal', rows:this.disposalItems.filter(i=>match(`${i.name} ${(i.keywords||[]).join(' ')} ${i.note||''}`)).slice(0,6), title:i=>i.name, detail:i=>i.note},
+        {id:'seeds', label:'Food, seeds & soil', rows:this.seedProfiles.filter(i=>match(`${i.name} ${(i.keywords||[]).join(' ')} ${i.edible} ${i.saveable} ${i.compost}`)).slice(0,6), title:i=>i.name, detail:i=>i.saveable},
+        {id:'reconnect', label:'Reconnect', rows:this.reconnectModules.filter(i=>match(`${i.title} ${i.opening} ${i.example} ${i.deeper}`)).slice(0,6), title:i=>i.title, detail:i=>i.opening},
+        {id:'practices', label:'Practices', rows:this.journeySteps.filter(i=>match(i._search || `${i.title} ${i.summary} ${i.category}`)).slice(0,6), title:i=>i.title, detail:i=>i.summary}
+      ];
+      this.groupedSearchCacheKey = cacheKey;
+      this.groupedSearchCacheRows = groups.filter(group=>group.rows.length);
+      return this.groupedSearchCacheRows;
+    },
+
+    openKnowledgeResult(group, item) {
+      if (group.id === 'items') { this.selectSwapItem(item.id); return; }
+      if (group.id === 'guides' || group.id === 'practices') { this.openContent(item); return; }
+      if (group.id === 'disposal') { this.disposalSearch=item.name; this.go('disposal'); return; }
+      if (group.id === 'seeds') { this.openSeedFromSearch(item); return; }
+      if (group.id === 'reconnect') { this.selectReconnect(item.id); this.go('reconnect'); }
+    },
+
     searchEverything() {
       const q = (this.globalSearch || '').trim();
       if (!q) { this.exploreSearch=''; this.go('explore'); return; }
       const qLower = q.toLowerCase();
+      const seedMatch = this.seedProfiles.find(profile =>
+        profile.name.toLowerCase().includes(qLower) ||
+        (profile.keywords || []).some(keyword => keyword.toLowerCase().includes(qLower) || qLower.includes(keyword.toLowerCase()))
+      );
+      if (seedMatch) {
+        this.foodCycleSearch=q;
+        this.selectedSeedId=seedMatch.id;
+        this.persist();
+        this.go('food-soil');
+        return;
+      }
       const itemMatches = this.itemGuideItems.some(i =>
         (i._search || `${i.name||''} ${i.summary||''} ${(i.keywords||[]).join(' ')}`.toLowerCase()).includes(qLower)
       );
@@ -2523,6 +2859,7 @@ function zerraApp() {
 
     clearExploreFilters() {
       this.exploreSearch='';
+      this.activeDiscoverCollection='';
       this.filters={category:'',path:'',difficulty:'',cost:'',time:'',sort:'relevance'};
       this.persist();
     },

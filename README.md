@@ -5,7 +5,7 @@ Earth-connected living --- built around using what you already have
 first.*
 
 ![About
-Zerra](https://raw.githubusercontent.com/michaelsboost/Zerra/main/imgs/promo.png)
+Zerra](imgs/promo.png)
 
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://michaelsboost.com/Zerra/)
@@ -23,6 +23,11 @@ Issues](https://img.shields.io/github/issues/michaelsboost/Zerra)](https://githu
 Zerra is a free, open-source guide to reducing waste, consuming less,
 reusing more, building practical skills, and reconnecting everyday life
 with the Earth.
+
+The experience is organized around the LIFE Framework: **Longevity,
+Integrity, Flourishing, and Equilibrium**. It connects practical action
+with relationships among people, animals, communities, belongings,
+food, soil, and Mother Earth.
 
 A lot of sustainability advice begins with buying a greener replacement.
 Zerra begins somewhere else:
@@ -305,6 +310,13 @@ continued learning.
 -   ✅ No account required
 -   ✅ No backend required
 -   ✅ Open source
+-   ✅ Direct entry into Today with optional personalization
+-   ✅ LIFE Framework and Reconnect learning modules
+-   ✅ Food, seed-saving, compost, and restoration guidance
+-   ✅ Grouped search across Zerra's connected knowledge
+-   ✅ Contextual Go Vegan companion guidance
+-   ✅ Installable, offline-capable PWA
+-   ✅ Self-contained kodeWeave project export with base64-embedded images
 
 ------------------------------------------------------------------------
 
@@ -342,6 +354,17 @@ Guides
 
 This structure allows someone to begin with a simple object and move
 outward into broader habits and skills.
+
+### Companion project: Go Vegan
+
+Zerra and [Go Vegan](https://michaelsboost.com/govegan/) are separate,
+independent apps with complementary purposes. Zerra focuses on
+consumption, care, material life cycles, seeds, soil, return, and
+restoration. When a question centers animals, animal-derived foods, or
+animal-derived materials, contextual links point to Go Vegan for the
+deeper animal relationship, plant-based alternatives, recipes, and
+nutrition guidance. The apps do not share browser storage or require
+one another to function.
 
 ------------------------------------------------------------------------
 

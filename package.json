@@ -1,6 +1,6 @@
 {
   "name": "zerra",
-  "version": "1.0.0-rc24-persistence-audited",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build:css": "postcss src/bundle.css -o dist/bundle.css",
