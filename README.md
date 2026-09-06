@@ -5,7 +5,7 @@ Earth-connected living --- built around using what you already have
 first.*
 
 ![About
-Zerra](imgs/promo.png)
+Zerra](https://raw.githubusercontent.com/michaelsboost/Zerra/main/imgs/promo.png)
 
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://michaelsboost.com/Zerra/)

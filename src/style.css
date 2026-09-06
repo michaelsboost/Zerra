@@ -438,11 +438,6 @@ html[data-theme="dark"] .zerra-hero-title {
   text-shadow: 0 3px 12px #000, 0 1px 3px #000;
 }
 
-.zerra-home-hero .zerra-path-status {
-  color: #fff;
-  text-shadow: 0 2px 8px #000, 0 1px 2px #000;
-}
-
 .zerra-hero-visual {
   min-height: 15rem;
   overflow: hidden;

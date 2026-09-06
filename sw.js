@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zerra-app-shell-v1.0.1';
+const CACHE_NAME = 'zerra-app-shell-v1.0.2';
 const APP_SHELL = [
   './', './index.html', './manifest.json', './dist/bundle.css', './dist/script.js',
   './libraries/alpine.js', './imgs/logo.svg', './imgs/logo-192x192.png',

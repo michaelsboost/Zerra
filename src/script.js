@@ -2684,7 +2684,7 @@ function zerraApp() {
     setTheme(theme) {
       this.theme=theme === 'dark' ? 'dark' : 'light';
       document.documentElement.dataset.theme=this.theme;
-      const color=this.theme==='dark' ? '#101914' : '#f5f1e8';
+      const color='#000000';
       document.querySelectorAll('meta[name="theme-color"], meta[name="msapplication-navbutton-color"]').forEach(meta=>meta.setAttribute('content',color));
       this.persist();
     },
