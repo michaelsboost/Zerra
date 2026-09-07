@@ -27,7 +27,8 @@
   </head>
   <body>
 
-<div x-data="zerraApp()" x-init="init()" @keydown.escape.window="closeModals()">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div x-data="zerraApp()" x-init="init()" @keydown.escape.window="closeModals()" x-cloak>
   <svg aria-hidden="true" class="hidden">
     <symbol id="i-home" viewbox="0 0 24 24">
       <path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
@@ -148,11 +149,11 @@
           </div>
           <p class="text-sm font-bold uppercase tracking-[.18em] text-primary">
             Welcome to Zerra</p>
-          <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">How do
-            you want to live?</h1>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">Reconnect with what sustains you.</h1>
           <p class="text-muted mt-4 text-base sm:text-lg leading-relaxed">
-            There is no perfect way to live with less waste. Choose the path
-            that best fits the life you want now. You can change it anytime.
+            Zerra connects everyday choices with Mother Earth, other living
+            beings, our communities, and the consequences of what we do. Start
+            with what would help you now. You can change it anytime.
           </p>
           <div class="mt-5 rounded-2xl primary-soft p-4 flex gap-3">
             <svg class="w-5 h-5 text-primary shrink-0 mt-0.5">
@@ -162,6 +163,9 @@
               what you already have before buying something new.</p>
           </div>
         </div>
+        <div class="mt-8">
+          <p class="text-sm font-black">Choose the practical approach that fits your circumstances.</p>
+          <p class="text-xs text-muted mt-1">The responsibility to care is shared. The methods can differ by access, housing, health, time, and resources.</p>
         <div class="grid md:grid-cols-3 gap-4 mt-8">
           <template :key="path.id" x-for="path in paths">
             <button
@@ -189,15 +193,9 @@
             </button>
           </template>
         </div>
+        </div>
         <div
           class="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-          <label class="block flex-1">
-            <span class="text-sm font-bold">Your name <span
-                class="font-normal text-muted">(optional)</span></span>
-            <input class="input mt-2" maxlength="40"
-              placeholder="What should Zerra call you?"
-              x-model.trim="profile.name" />
-          </label>
           <button @click="finishOnboarding()"
             class="btn btn-primary px-6 mt-2 sm:mt-7">
             Begin your journey
@@ -210,39 +208,34 @@
     </main>
   </div>
   <div class="min-h-screen" x-cloak="" x-show="profile.onboarded">
-    <header class="sticky top-0 z-40 border-b border-theme"
+    <header class="zerra-app-header sticky top-0 z-40 border-b border-theme"
       style="background:var(--header);backdrop-filter:blur(16px)">
       <div
         class="content-max mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
         <button @click="go('home')" aria-label="Go to Zerra home"
-          class="flex items-center gap-3 rounded-xl">
-          <div
-            class="w-9 h-9 rounded-xl primary-soft text-primary flex items-center justify-center">
-            <svg class="w-5 h-5">
-              <use href="#i-leaf"></use>
-            </svg>
-          </div>
+          class="zerra-brand flex items-center gap-2 rounded-xl">
+          <span class="zerra-brand-icon" aria-hidden="true">🍃</span>
           <div class="text-left">
-            <div class="font-black tracking-[.08em] leading-none">ZERRA</div>
+            <div class="zerra-brand-name font-black leading-none">Zerra</div>
             <div class="hidden sm:block text-[11px] text-muted mt-1">Rethink
               Waste. Reconnect with Earth.</div>
           </div>
         </button>
         <nav aria-label="Primary navigation"
-          class="hidden lg:flex items-center gap-1">
+          class="zerra-desktop-nav hidden lg:flex items-center gap-5">
           <template :key="item.id" x-for="item in primaryNav">
             <button
-              :class="view === item.id ? 'primary-soft text-primary' : 'text-muted'"
+              :class="navActive(item.id) ? 'primary-soft text-primary' : 'text-muted'"
               @click="go(item.id)"
-              class="px-3 py-2 rounded-xl text-sm font-bold"
+              class="zerra-desktop-nav-item px-1 py-2 text-sm font-bold"
               x-text="item.label"></button>
           </template>
         </nav>
-        <div class="flex items-center gap-2">
+        <div class="zerra-header-actions flex items-center">
           <button
             :aria-label="theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'"
             @click="toggleTheme()"
-            class="w-11 h-11 rounded-xl soft flex items-center justify-center">
+            class="zerra-header-action flex items-center justify-center">
             <svg class="w-5 h-5" x-show="theme === 'light'">
               <use href="#i-moon"></use>
             </svg>
@@ -250,8 +243,20 @@
               <use href="#i-sun"></use>
             </svg>
           </button>
+          <button @click="go('swaps')" aria-label="Search Zerra"
+            class="zerra-header-action flex items-center justify-center">
+            <svg class="w-5 h-5"><use href="#i-search"></use></svg>
+          </button>
+          <button @click="shareApp()" aria-label="Share Zerra"
+            class="zerra-header-action flex items-center justify-center">
+            <span aria-hidden="true" class="text-xl leading-none">↗</span>
+          </button>
+          <a href="https://michaelsboost.com/donate" target="_blank" rel="noopener noreferrer"
+            aria-label="Donate" class="zerra-header-action flex items-center justify-center">
+            <span aria-hidden="true" class="text-lg leading-none">♡</span>
+          </a>
           <button @click="settingsOpen = true" aria-label="Open settings"
-            class="w-11 h-11 rounded-xl soft flex items-center justify-center">
+            class="zerra-header-action flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8">
               <use href="#i-settings"></use>
             </svg>
@@ -259,14 +264,14 @@
         </div>
       </div>
     </header>
-    <div class="content-max mx-auto lg:flex">
+    <div class="content-max zerra-content mx-auto lg:flex">
       <!-- Desktop sidebar -->
-      <aside class="desktop-sidebar shrink-0 hidden lg:block px-5 py-7">
+      <aside class="desktop-sidebar shrink-0 hidden px-5 py-7">
         <div class="sticky top-24 space-y-6">
           <nav aria-label="Zerra sections" class="space-y-1">
             <template :key="item.id" x-for="item in primaryNav">
               <button
-                :class="view === item.id ? 'primary-soft text-primary' : 'text-muted'"
+                :class="navActive(item.id) ? 'primary-soft text-primary' : 'text-muted'"
                 @click="go(item.id)"
                 class="w-full min-h-[46px] px-3 rounded-xl flex items-center gap-3 text-sm font-bold text-left">
                 <svg class="w-5 h-5">
@@ -296,37 +301,29 @@
         </div>
       </aside>
       <!-- Main -->
-      <main class="min-w-0 flex-1 px-4 sm:px-6 py-6 lg:py-8 bottom-safe">
+      <main id="main-content" tabindex="-1" class="zerra-main min-w-0 flex-1 px-4 sm:px-6 py-6 lg:py-8 bottom-safe">
         <!-- HOME -->
         <section x-show="view === 'home'" x-transition.opacity="">
           <div class="grid xl:grid-cols-[1.55fr_.8fr] gap-5">
             <div class="space-y-5">
-              <article class="surface botanical rounded-[2rem] p-6 sm:p-8">
+              <article class="zerra-home-hero surface botanical rounded-[2rem] p-6 sm:p-8">
                 <div
                   class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
                   <div class="max-w-2xl">
                     <p class="text-sm text-primary font-bold"
                       x-text="greeting()"></p>
+                    <p class="text-xs text-primary font-bold mt-2"><span x-text="pathName(profile.path)"></span> recommendations · Change in Settings</p>
                     <h1
-                      class="text-3xl sm:text-4xl font-black tracking-tight mt-1">
+                      class="zerra-hero-title text-3xl sm:text-5xl font-black tracking-tight mt-1">
                       Rethink Waste.<br class="hidden sm:block" /> Reconnect
                       with Earth.</h1>
                     <p class="text-muted mt-3 max-w-xl">
-                      Practical steps toward using less, wasting less, learning
-                      useful skills, and living with greater connection to what
-                      sustains you.
+                      Use what you already have first.
                     </p>
                   </div>
-                  <button @click="go('journey')"
-                    class="surface-flat rounded-2xl p-4 text-left min-w-[190px]">
-                    <span
-                      class="text-xs uppercase tracking-wider text-muted font-bold">Your
-                      path</span>
-                    <div class="font-black text-lg mt-1"
-                      x-text="pathName(profile.path)"></div>
-                    <div class="text-xs text-muted mt-1">Change anytime in
-                      Settings</div>
-                  </button>
+                </div>
+                <div class="zerra-hero-visual" aria-hidden="true">
+                  <img src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" />
                 </div>
                 <div class="mt-7">
                   <label class="relative block">
@@ -337,34 +334,47 @@
                     </svg>
                     <input @keydown.enter="searchEverything()"
                       class="input !rounded-2xl !pl-12 !pr-24 !min-h-[56px]"
-                      placeholder="Search items, guides, skills, and household questions..."
+                      placeholder="What do you want to waste less of?"
                       x-model="globalSearch" />
                     <button type="button" @click="searchEverything()"
                       class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-primary !min-h-[40px] !px-4">Search</button>
                   </label>
                 </div>
+                <div class="flex gap-2 overflow-x-auto scrollbar-none mt-4 pb-1" aria-label="Quick actions">
+                  <template :key="action.label" x-for="action in quickActions">
+                    <button @click="runQuickAction(action)" class="chip" x-text="action.label"></button>
+                  </template>
+                </div>
+              </article>
+              <article class="zerra-life-section surface rounded-3xl p-5 sm:p-6">
+                <p class="text-xs uppercase tracking-[.16em] text-earth font-black">The Life Framework</p>
+                <h2 class="text-2xl font-black mt-2">Four values for a connected life.</h2>
+                <p class="text-sm text-muted mt-3 max-w-3xl">LIFE is Zerra’s ethical lens for rebuilding a conscious relationship with Mother Earth, other living beings, communities, belongings, food, and self. The four values work together; none is a score, purity test, or excuse to ignore health, safety, accessibility, or material reality.</p>
+                <div class="zerra-life-grid grid md:grid-cols-2 gap-4 mt-5">
+                  <template :key="value.id" x-for="value in lifeFramework">
+                    <article class="zerra-life-value surface-flat rounded-2xl p-5">
+                      <div class="flex items-center gap-3"><div class="zerra-life-icon !m-0 shrink-0" aria-hidden="true" x-text="({longevity:'🍃',integrity:'♡',flourishing:'🌱',equilibrium:'≈'})[value.id]"></div><div><p class="text-xs uppercase tracking-[.16em] text-primary font-black" x-text="'L · I · F · E'"></p><h3 class="text-xl font-black" x-text="value.name"></h3></div></div>
+                      <p class="text-sm font-bold mt-4" x-text="value.summary"></p>
+                      <p class="text-sm text-muted mt-3 leading-relaxed" x-text="value.relationship"></p>
+                      <div class="rounded-xl primary-soft p-4 mt-4"><p class="text-xs uppercase tracking-[.15em] text-primary font-black">Ask</p><p class="text-sm font-bold mt-1" x-text="value.question"></p></div>
+                      <div class="mt-4"><p class="text-xs uppercase tracking-[.15em] text-earth font-black">In practice</p><p class="text-sm text-muted mt-1 leading-relaxed" x-text="value.practice"></p></div>
+                    </article>
+                  </template>
+                </div>
+                <div class="rounded-2xl earth-soft p-5 mt-5"><h3 class="font-black">Carry three questions into every decision</h3><ol class="mt-3 space-y-2 text-sm"><li><strong>1.</strong> What is my relationship with this?</li><li><strong>2.</strong> What is the most responsible practical action available to me?</li><li><strong>3.</strong> How can I return, restore, share, or give back?</li></ol><p class="text-xs text-muted mt-4">The LIFE Framework and Zerra’s four responsibilities are Michael’s creator framework. Zerra does not attribute them to the Hopi or broadly to Indigenous peoples without specific, reliable evidence.</p></div>
               </article>
               <div class="grid md:grid-cols-2 gap-5">
-                <article class="surface rounded-3xl p-5">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <p
-                        class="text-xs uppercase tracking-[.16em] text-primary font-black">
-                        Today's Focus</p>
-                      <h2 class="text-xl font-black mt-2"
-                        x-text="todayFocus().title"></h2>
-                    </div>
-                    <div
-                      class="w-10 h-10 rounded-xl primary-soft text-primary flex items-center justify-center shrink-0">
-                      <svg class="w-5 h-5">
-                        <use href="#i-leaf"></use>
-                      </svg>
-                    </div>
+                <article class="zerra-today-card surface rounded-3xl overflow-hidden">
+                  <img src="imgs/save-seeds-practice.jpg"
+                    alt="A hand pouring saved seeds into a reusable glass jar"
+                    class="zerra-today-image" width="1200" height="800" />
+                  <div class="p-5">
+                    <p class="text-xs uppercase tracking-[.16em] text-primary font-black">Today</p>
+                    <h2 class="text-2xl font-black mt-2" x-text="todayFocus().title"></h2>
+                    <p class="text-sm text-muted leading-relaxed mt-3" x-text="todayFocus().summary"></p>
+                    <button @click="openContent(todayFocus())"
+                      class="btn btn-primary mt-5">Explore this practice <span aria-hidden="true">→</span></button>
                   </div>
-                  <p class="text-sm text-muted leading-relaxed mt-3"
-                    x-text="todayFocus().summary"></p>
-                  <button @click="openContent(todayFocus())"
-                    class="btn btn-soft mt-5">Explore focus</button>
                 </article>
                 <article class="surface rounded-3xl p-5">
                   <p
@@ -441,7 +451,7 @@
                   <div>
                     <p
                       class="text-xs uppercase tracking-[.16em] text-primary font-black">
-                      Recommended</p>
+                      Recommended for your <span x-text="pathName(profile.path)"></span> path</p>
                     <h2 class="text-2xl font-black mt-1">Learn next</h2>
                   </div>
                   <button @click="go('explore')"
@@ -468,6 +478,30 @@
               </section>
             </div>
             <aside class="space-y-5">
+              <article class="surface rounded-3xl p-5">
+                <p class="text-xs uppercase tracking-[.16em] text-primary font-black">Support Zerra</p>
+                <h2 class="text-xl font-black mt-1">Help the project keep growing.</h2>
+                <p class="text-sm text-muted mt-2 leading-relaxed">Zerra is independently created. You can support its continued development directly or wear the idea behind it.</p>
+                <div class="grid sm:grid-cols-2 xl:grid-cols-1 gap-3 mt-4">
+                  <a href="https://michaelsboost.com/donate" target="_blank" rel="noopener noreferrer" class="btn btn-primary w-full">
+                    <span aria-hidden="true">♡</span> Support Zerra
+                  </a>
+                  <a href="https://michaelsboost-store.creator-spring.com/listing/zerra-unplug-from-the-system" target="_blank" rel="noopener noreferrer" class="btn btn-soft w-full">
+                    <span aria-hidden="true">👕</span> Get the Zerra Shirt ↗
+                  </a>
+                  <a href="https://github.com/michaelsboost/Zerra"
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     class="btn btn-soft">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 .7a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.23c-3.22.7-3.9-1.37-3.9-1.37-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.57-.29-5.27-1.29-5.27-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.47.11-3.05 0 0 .97-.31 3.16 1.18a10.97 10.97 0 0 1 5.76 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.71 5.39-5.29 5.68.42.36.79 1.07.79 2.16v3.2c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .7Z"/>
+                    </svg>
+                  
+                    View Source on GitHub
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </article>
               <article class="surface rounded-3xl p-5">
                 <div class="flex items-center justify-between">
                   <div>
@@ -579,15 +613,227 @@
             </aside>
           </div>
         </section>
+        <!-- WHEN HARM BECOMES NORMAL -->
+        <section x-show="view === 'normalization'" x-transition.opacity="">
+          <button @click="go('explore')" class="chip">← Discover</button>
+          <header class="reconnect-hero surface rounded-[2rem] p-6 sm:p-9 mt-5">
+            <p class="text-sm font-bold text-primary">History, ethics, and the danger of familiarity</p>
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">When Harm Becomes Normal</h1>
+            <p class="text-lg text-muted mt-4 max-w-3xl">A practice being legal, traditional, profitable, familiar, or socially accepted does not by itself establish that the practice is ethical.</p>
+            <div class="rounded-2xl earth-soft p-5 mt-6 max-w-4xl">
+              <strong>This is not a claim that animal agriculture, consumer waste, or environmental damage is identical to human atrocities.</strong>
+              <p class="text-sm mt-2">The victims, histories, circumstances, and forms of suffering are different. The comparison concerns a recurring social mechanism: people can become accustomed to harmful systems and build language, institutions, laws, habits, and economic interests around them.</p>
+            </div>
+          </header>
+
+          <section class="mt-8">
+            <div class="flex gap-4 items-start"><span class="text-primary font-black text-2xl">01</span><div><h2 class="text-2xl font-black">Normalization is not justification.</h2><p class="text-muted mt-2 max-w-3xl">History contains practices defended or tolerated within their societies and later condemned, restricted, or abolished. Their familiarity did not make them defensible.</p></div></div>
+            <div class="grid md:grid-cols-2 gap-4 mt-5">
+              <article class="surface rounded-3xl p-5"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Enslavement</p><h3 class="text-xl font-black mt-2">People treated as property</h3><p class="text-sm text-muted mt-2">Enslavement was embedded in law and major economic systems for generations. Historical acceptance did not make ownership of human beings morally defensible.</p><a class="inline-block text-sm text-primary underline mt-4" href="https://www.loc.gov/classroom-materials/united-states-history-primary-source-timeline/national-expansion-and-reform-1815-1880/pre-civil-war-african-american-slavery/" target="_blank" rel="noopener noreferrer">Library of Congress ↗</a></article>
+              <article class="surface rounded-3xl p-5"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Child labor</p><h3 class="text-xl font-black mt-2">Dangerous work became ordinary</h3><p class="text-sm text-muted mt-2">Industrial child labor placed children in factories, mills, mines, and street work. Reform came despite defenses involving income, industry, and established practice.</p><a class="inline-block text-sm text-primary underline mt-4" href="https://www.loc.gov/classroom-materials/child-labor/" target="_blank" rel="noopener noreferrer">Library of Congress ↗</a></article>
+              <article class="surface rounded-3xl p-5"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Forced assimilation</p><h3 class="text-xl font-black mt-2">Native children separated from culture</h3><p class="text-sm text-muted mt-2">Federal Indian boarding schools separated Native children from families and sought to suppress languages, religions, names, clothing, and cultural practices.</p><a class="inline-block text-sm text-primary underline mt-4" href="https://www.nps.gov/articles/boarding-schools.htm" target="_blank" rel="noopener noreferrer">National Park Service ↗</a></article>
+              <article class="surface rounded-3xl p-5"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Human experimentation</p><h3 class="text-xl font-black mt-2">Research without meaningful consent</h3><p class="text-sm text-muted mt-2">The U.S. Public Health Service study at Tuskegee continued without informed consent and without appropriate treatment even after effective treatment was available.</p><a class="inline-block text-sm text-primary underline mt-4" href="https://www.nlm.nih.gov/news/Collection-Untreated-Syphilis-Study-Tuskegee.html" target="_blank" rel="noopener noreferrer">National Library of Medicine ↗</a></article>
+            </div>
+          </section>
+
+          <section class="surface rounded-3xl p-5 sm:p-7 mt-8">
+            <div class="flex gap-4 items-start"><span class="text-primary font-black text-2xl">02</span><div><h2 class="text-2xl font-black">How harmful systems become ordinary.</h2><p class="text-muted mt-2">No single mechanism explains every case, but the same kinds of defenses appear repeatedly.</p></div></div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-5">
+              <div class="surface-flat rounded-2xl p-4"><strong>Tradition</strong><p class="text-sm text-muted mt-1">“We have always done it.”</p></div>
+              <div class="surface-flat rounded-2xl p-4"><strong>Legality</strong><p class="text-sm text-muted mt-1">“It is allowed, therefore it is acceptable.”</p></div>
+              <div class="surface-flat rounded-2xl p-4"><strong>Economics</strong><p class="text-sm text-muted mt-1">“Jobs and livelihoods depend on it.”</p></div>
+              <div class="surface-flat rounded-2xl p-4"><strong>Distance</strong><p class="text-sm text-muted mt-1">The harmed person, animal, community, or ecosystem becomes invisible to the beneficiary.</p></div>
+              <div class="surface-flat rounded-2xl p-4"><strong>Language</strong><p class="text-sm text-muted mt-1">Technical or commercial words can make physical realities easier to ignore.</p></div>
+              <div class="surface-flat rounded-2xl p-4"><strong>Institutions</strong><p class="text-sm text-muted mt-1">Responsibility can be distributed until nobody feels accountable for the whole system.</p></div>
+            </div>
+          </section>
+
+          <section class="surface rounded-3xl p-5 sm:p-7 mt-8">
+            <div class="flex gap-4 items-start"><span class="text-primary font-black text-2xl">03</span><div><h2 class="text-2xl font-black">Apply the question consistently.</h2><p class="text-muted mt-2 max-w-3xl">The lesson is not that every accepted practice is secretly evil. It is that acceptance alone cannot settle the moral question.</p></div></div>
+            <div class="rounded-2xl primary-soft p-5 mt-5"><p class="text-lg font-black">Who or what bears the harm, and are tradition, convenience, price, legality, or profit sufficient reasons to continue it when realistic alternatives exist?</p><p class="text-sm text-muted mt-3">Ask this of disposable consumption, planned obsolescence, extraction, pollution, exploitative labor, animal use, and the ways costs are shifted onto communities, future generations, and Mother Earth.</p></div>
+            <div class="flex flex-wrap gap-3 mt-5"><button @click="go('reconnect')" class="btn btn-primary">Explore disconnection and responsibility</button><a href="https://michaelsboost.com/govegan/" target="_blank" rel="noopener noreferrer" class="btn btn-soft">Examine animal use in Go Vegan ↗</a></div>
+          </section>
+        </section>
+
+        <!-- RECONNECT -->
+        <section x-show="view === 'reconnect'" x-transition.opacity="">
+          <button @click="go('explore')" class="chip">← Discover</button>
+          <div class="reconnect-hero surface rounded-[2rem] p-6 sm:p-9 mt-5">
+            <p class="text-sm font-bold text-primary">Reconnect</p>
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">Remember the relationships behind everyday life.</h1>
+            <p class="text-muted mt-4 max-w-3xl">Waste begins long before a bin. Reconnect explores origins, dependence, responsibility, reciprocity, enoughness, place, and the movement from doing less harm toward restoring what sustains life.</p>
+            <div class="rounded-2xl primary-soft p-4 mt-6 max-w-3xl">
+              <p class="text-sm"><strong>Attribution:</strong> The Life Framework and four responsibilities are Michael’s creator framework. Zerra does not label them as Hopi or broadly Indigenous teachings without specific, reliable evidence.</p>
+            </div>
+          </div>
+
+          <div class="grid xl:grid-cols-[20rem_minmax(0,1fr)] gap-5 mt-6">
+            <nav class="surface rounded-3xl p-3 h-fit xl:sticky xl:top-24" aria-label="Reconnect modules">
+              <template x-for="module in reconnectModules" :key="module.id">
+                <button @click="selectReconnect(module.id)"
+                  :class="selectedReconnectId === module.id ? 'primary-soft text-primary' : 'text-muted'"
+                  class="w-full rounded-2xl p-3 flex items-center gap-3 text-left">
+                  <span class="text-xs font-black" x-text="module.number"></span>
+                  <span class="text-sm font-bold" x-text="module.title"></span>
+                </button>
+              </template>
+            </nav>
+
+            <article class="surface rounded-3xl overflow-hidden" x-data="{}">
+              <div class="p-5 sm:p-8 border-b border-theme">
+                <p class="text-xs uppercase tracking-[.16em] text-primary font-black" x-text="'Module ' + selectedReconnectModule().number"></p>
+                <h2 class="text-3xl sm:text-4xl font-black mt-2" x-text="selectedReconnectModule().title"></h2>
+                <p class="text-lg text-muted leading-relaxed mt-4" x-text="selectedReconnectModule().opening"></p>
+              </div>
+              <div class="p-5 sm:p-8 space-y-7">
+                <section>
+                  <h3 class="text-xl font-black">An everyday example</h3>
+                  <p class="text-muted mt-2 leading-relaxed" x-text="selectedReconnectModule().example"></p>
+                </section>
+                <section>
+                  <h3 class="text-xl font-black">Look deeper</h3>
+                  <p class="text-muted mt-2 leading-relaxed" x-text="selectedReconnectModule().deeper"></p>
+                </section>
+                <section class="rounded-2xl earth-soft p-5">
+                  <h3 class="text-xl font-black">Reflect</h3>
+                  <ul class="mt-3 space-y-2 text-sm">
+                    <template x-for="prompt in selectedReconnectModule().prompts" :key="prompt">
+                      <li class="flex gap-2"><span class="text-earth">●</span><span x-text="prompt"></span></li>
+                    </template>
+                  </ul>
+                  <label class="block mt-4">
+                    <span class="sr-only">Write a private reflection</span>
+                    <textarea x-model="reflectionDraft" class="input !min-h-[110px]" maxlength="1200" placeholder="Write a private reflection…"></textarea>
+                  </label>
+                  <button @click="saveReflection(selectedReconnectModule())" :disabled="!reflectionDraft.trim()" class="btn btn-primary mt-3 disabled:opacity-50">Save to My Path</button>
+                  <p class="text-xs text-muted mt-2">Stored only in this browser with your other Zerra data.</p>
+                </section>
+                <section class="rounded-2xl primary-soft p-5">
+                  <p class="text-xs uppercase tracking-[.16em] text-primary font-black">Put it into practice</p>
+                  <p class="font-bold mt-2" x-text="selectedReconnectModule().action"></p>
+                  <button @click="runReconnectAction(selectedReconnectModule())" class="btn btn-primary mt-4">Find related actions →</button>
+                </section>
+                <section>
+                  <h3 class="text-lg font-black">Source and attribution note</h3>
+                  <p class="text-sm text-muted mt-2 leading-relaxed" x-text="selectedReconnectModule().attribution"></p>
+                </section>
+                <section class="border-t border-theme pt-6">
+                  <h3 class="text-lg font-black">Companion connection</h3>
+                  <p class="text-sm text-muted mt-2">When a subject centers animals, animal-derived foods, or materials, Go Vegan explores the living beings and plant-based alternatives behind it.</p>
+                  <a href="https://michaelsboost.com/govegan/" target="_blank" rel="noopener noreferrer" class="btn btn-soft mt-4">Open Go Vegan ↗</a>
+                </section>
+              </div>
+            </article>
+          </div>
+
+          <section class="surface rounded-3xl p-5 sm:p-7 mt-6">
+            <p class="text-xs uppercase tracking-[.16em] text-earth font-black">The four responsibilities</p>
+            <h2 class="text-2xl font-black mt-2">The Life Framework in practice.</h2>
+            <div class="grid md:grid-cols-2 gap-3 mt-5">
+              <template x-for="(responsibility,index) in reconnectResponsibilities" :key="responsibility">
+                <div class="surface-flat rounded-2xl p-4 flex gap-3"><span class="text-primary font-black" x-text="index + 1"></span><p class="text-sm" x-text="responsibility"></p></div>
+              </template>
+            </div>
+          </section>
+        </section>
+
+        <!-- FOOD, SEEDS & SOIL -->
+        <section x-show="view === 'food-soil'" x-transition.opacity="">
+          <button @click="go('explore')" class="chip">← Discover</button>
+          <div class="food-soil-hero surface rounded-[2rem] p-6 sm:p-9 mt-5">
+            <p class="text-sm font-bold text-primary">Food, Seeds &amp; Soil</p>
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight mt-2">Use the food. Save what can grow. Return what remains.</h1>
+            <p class="text-muted mt-4 max-w-3xl">A seed is not automatically food, viable planting stock, or appropriate for the place where you live. Start with the plant, its source, and your circumstances—then choose a respectful path.</p>
+            <div class="rounded-2xl primary-soft p-4 mt-6 max-w-3xl"><strong>Never scatter unknown seeds.</strong> Do not plant saved seeds in parks, roadsides, public land, or unmanaged natural areas. Check permission, invasive-species guidance, disease restrictions, and local growing rules.</div>
+          </div>
+
+          <div class="surface rounded-3xl p-4 sm:p-5 mt-6">
+            <label class="relative block">
+              <span class="sr-only">Search food or seeds</span>
+              <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-muted"><use href="#i-search"></use></svg>
+              <input class="input !pl-12" x-model="foodCycleSearch" placeholder="Try bell pepper, pumpkin, tomato, apple, avocado…" />
+            </label>
+            <div class="flex gap-2 overflow-x-auto scrollbar-none mt-4 pb-1">
+              <template x-for="profile in filteredSeedProfiles()" :key="profile.id">
+                <button @click="selectSeed(profile)" :class="selectedSeedId===profile.id &amp;&amp; 'active'" class="chip"><span x-text="profile.emoji"></span><span x-text="profile.name"></span></button>
+              </template>
+            </div>
+          </div>
+
+          <template x-if="selectedSeedProfile()">
+            <article class="surface rounded-3xl overflow-hidden mt-6">
+              <div class="p-5 sm:p-8 border-b border-theme flex items-start gap-4">
+                <span class="text-4xl" x-text="selectedSeedProfile().emoji" aria-hidden="true"></span>
+                <div><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Living-cycle answer</p><h2 class="text-3xl font-black mt-1" x-text="selectedSeedProfile().name"></h2></div>
+              </div>
+              <div class="p-5 sm:p-8">
+                <div class="flex gap-2 overflow-x-auto scrollbar-none pb-2" aria-label="Possible paths">
+                  <template x-for="outcome in selectedSeedProfile().outcomes" :key="outcome"><span class="seed-outcome" :class="outcome==='unsuitable'?'seed-outcome-warn':''" x-text="outcome"></span></template>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4 mt-5">
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Can I eat it?</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().edible"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Is it mature?</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().maturity"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Can I save it?</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().saveable"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">What might grow?</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().genetics"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Clean and separate</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().cleaning"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Dry safely</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().drying"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Store and label</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().storage"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Plant in context</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().planting"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Share honestly</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().share"></p></section>
+                  <section class="surface-flat rounded-2xl p-5"><h3 class="font-black">Return what remains</h3><p class="text-sm text-muted mt-2" x-text="selectedSeedProfile().compost"></p></section>
+                </div>
+                <div class="rounded-2xl earth-soft p-5 mt-4"><h3 class="font-black">Important limits</h3><p class="text-sm mt-2" x-text="selectedSeedProfile().cautions"></p></div>
+                <div class="flex flex-wrap gap-3 mt-5">
+                  <button @click="logPhaseFourAction('Saved/Shared Seeds', selectedSeedProfile().name)" class="btn btn-primary">Record seed action</button>
+                  <a href="https://michaelsboost.com/govegan/" target="_blank" rel="noopener noreferrer" class="btn btn-soft">Find plant-based recipes in Go Vegan ↗</a>
+                </div>
+                <div class="mt-6 border-t border-theme pt-5"><h3 class="font-black">Guidance source</h3><div class="flex flex-wrap gap-2 mt-3"><template x-for="source in selectedSeedProfile().sources" :key="source"><a :href="source" target="_blank" rel="noopener noreferrer" class="text-sm text-primary underline">Open authoritative guidance ↗</a></template></div><p class="text-xs text-muted mt-3">General education only. Variety packets, Cooperative Extension, health guidance, and current local rules take priority for a specific seed, place, or person.</p></div>
+              </div>
+            </article>
+          </template>
+
+          <section class="mt-10">
+            <p class="text-sm font-bold text-primary">Return nutrients</p><h2 class="text-3xl font-black mt-1">Choose the compost system that actually fits.</h2>
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-5">
+              <template x-for="system in compostSystems" :key="system.id"><article class="surface rounded-3xl p-5"><h3 class="text-xl font-black" x-text="system.name"></h3><p class="text-xs text-primary font-bold mt-1" x-text="system.fit"></p><p class="text-sm mt-4"><strong>Usually fits:</strong> <span class="text-muted" x-text="system.accepts"></span></p><p class="text-sm mt-3"><strong>Limits:</strong> <span class="text-muted" x-text="system.limits"></span></p><a :href="system.source" target="_blank" rel="noopener noreferrer" class="inline-block text-sm text-primary underline mt-4">Official guidance ↗</a></article></template>
+            </div>
+          </section>
+
+          <section class="mt-10">
+            <p class="text-sm font-bold text-primary">Give Back &amp; Restore</p><h2 class="text-3xl font-black mt-1">Care for a place with whatever access you have.</h2>
+            <div class="flex gap-2 overflow-x-auto scrollbar-none mt-5 pb-2"><template x-for="context in [{id:'any',name:'Everywhere'},{id:'renter',name:'Renting'},{id:'balcony',name:'Balcony'},{id:'indoor',name:'Indoors'},{id:'yard',name:'Yard'},{id:'community',name:'Community'}]" :key="context.id"><button @click="growingContext=context.id" :class="growingContext===context.id &amp;&amp; 'active'" class="chip" x-text="context.name"></button></template></div>
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4"><template x-for="practice in filteredRestorationPractices()" :key="practice.id"><article class="surface rounded-3xl p-5 flex flex-col"><h3 class="text-xl font-black" x-text="practice.title"></h3><p class="text-sm text-muted mt-2 flex-1" x-text="practice.summary"></p><button @click="logPhaseFourAction(practice.id==='seed-library'?'Saved/Shared Seeds':'Cared for a Place',practice.title)" class="btn btn-soft mt-5">Record this action</button></article></template></div>
+            <div class="rounded-2xl primary-soft p-5 mt-5"><strong>Local knowledge matters.</strong> Verify species, climate, watershed, permission, housing rules, and ordinances through official local sources. A lawn-height rule is not automatically the same as a rule for intentional gardens or registered habitat.</div>
+          </section>
+        </section>
+
         <!-- EXPLORE -->
         <section x-show="view === 'explore'" x-transition.opacity="">
           <div class="max-w-3xl">
-            <p class="text-sm font-bold text-primary">Explore</p>
+            <p class="text-sm font-bold text-primary">Discover</p>
             <h1 class="text-3xl sm:text-4xl font-black tracking-tight mt-1">
-              Learn practical ways to live with less waste.</h1>
-            <p class="text-muted mt-3">Start with what matters now. Zerra favors
-              practical changes and using what you already have over buying your
-              way into sustainability.</p>
+              See the relationships behind everyday life.</h1>
+            <p class="text-muted mt-3">Find practical guidance while learning
+              where things come from, what sustains them, what happens after use,
+              and how you can return or give back.</p>
+          </div>
+          <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 mt-6">
+            <template :key="collection.id" x-for="collection in discoverCollections">
+              <button @click="openCollection(collection)"
+                :aria-pressed="activeDiscoverCollection===collection.title"
+                :style="activeDiscoverCollection===collection.title?'border-color:var(--primary);background:var(--primary-soft)':''"
+                class="surface collection-card rounded-3xl p-5 text-left card-hover">
+                <span class="text-2xl" aria-hidden="true" x-text="collection.emoji"></span>
+                <h2 class="text-lg font-black mt-3" x-text="collection.title"></h2>
+                <p class="text-sm text-muted mt-1" x-text="collection.description"></p>
+              </button>
+            </template>
+          </div>
+          <div class="flex gap-2 overflow-x-auto scrollbar-none py-4 mt-1">
+            <button @click="go('swaps')" class="chip">Search all items</button>
+            <button @click="go('disposal')" class="chip">Return or dispose</button>
+            <button @click="go('journey')" class="chip">Practice a skill</button>
+            <button @click="go('saved')" class="chip">Saved knowledge</button>
           </div>
           <div class="grid sm:grid-cols-3 gap-3 mt-6">
             <div class="surface-flat rounded-2xl p-4">
@@ -596,11 +842,11 @@
             </div>
             <div class="surface-flat rounded-2xl p-4">
               <div class="text-2xl font-black" x-text="exploreCategories.length"></div>
-              <div class="text-xs text-muted mt-1">Explore categories</div>
+              <div class="text-xs text-muted mt-1">knowledge categories</div>
             </div>
             <div class="surface-flat rounded-2xl p-4">
-              <div class="text-2xl font-black">100%</div>
-              <div class="text-xs text-muted mt-1">category expansion complete</div>
+              <div class="text-2xl font-black" x-text="discoverCollections.length"></div>
+              <div class="text-xs text-muted mt-1">connected collections</div>
             </div>
           </div>
 
@@ -612,7 +858,7 @@
                   class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-muted">
                   <use href="#i-search"></use>
                 </svg>
-                <input class="input !pl-12"
+                <input class="input !pl-12" @input="activeDiscoverCollection=''"
                   placeholder="Search repair, compost, food preservation, secondhand..."
                   x-model="exploreSearch" />
               </label>
@@ -658,6 +904,11 @@
                 <option>Ongoing</option>
               </select>
             </div>
+          </div>
+          <div id="discover-results" class="scroll-mt-24">
+          <div class="rounded-2xl primary-soft p-4 mt-5 flex flex-wrap items-center justify-between gap-3" x-show="activeDiscoverCollection">
+            <p class="text-sm"><strong>Showing:</strong> <span x-text="activeDiscoverCollection"></span></p>
+            <button @click="clearExploreFilters()" class="text-sm font-black text-primary">Show all Discover guides</button>
           </div>
           <div class="flex gap-2 overflow-x-auto scrollbar-none py-5">
             <button :class="filters.category === '' &amp;&amp; 'active'"
@@ -719,6 +970,7 @@
               filters.</p>
             <button @click="clearExploreFilters()"
               class="btn btn-primary mt-4">Clear filters</button>
+          </div>
           </div>
         </section>
         <!-- DISPOSAL -->
@@ -812,9 +1064,9 @@
           <div
             class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-5">
             <div class="max-w-3xl">
-              <p class="text-sm font-bold text-primary">Journey</p>
+              <p class="text-sm font-bold text-primary">Practice</p>
               <h1 class="text-3xl sm:text-4xl font-black tracking-tight mt-1">
-                Build the life you want, one useful skill at a time.</h1>
+                Turn understanding into lived practice.</h1>
               <p class="text-muted mt-3">Your <strong
                   x-text="pathName(profile.path)"></strong> path changes which
                 steps Zerra recommends first. Completing Journey steps grows
@@ -930,17 +1182,21 @@
           <div
             class="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
             <div class="max-w-3xl">
-              <p class="text-sm font-bold text-primary">Impact</p>
+              <p class="text-sm font-bold text-primary">My Path</p>
               <h1 class="text-3xl sm:text-4xl font-black tracking-tight mt-1">
-                Track what you actually do.</h1>
-              <p class="text-muted mt-3">Impact is separate from learning.
-                Reading, saving, browsing, and completing educational steps do
-                not create environmental impact entries.</p>
+                Remember what you practice, learn, save, and give back.</h1>
+              <p class="text-muted mt-3">Your path records real actions without
+                turning them into invented environmental numbers or a moral score.</p>
             </div>
             <button @click="openActionLog()" class="btn btn-primary"><svg
                 class="w-4 h-4">
                 <use href="#i-plus"></use>
               </svg>Log an action</button>
+          </div>
+          <div class="flex gap-2 overflow-x-auto scrollbar-none mt-5 pb-1">
+            <button @click="go('journey')" class="chip">Continue practices</button>
+            <button @click="go('saved')" class="chip">Saved knowledge <span x-text="saved.length"></span></button>
+            <button @click="settingsOpen=true" class="chip">Preferences</button>
           </div>
           <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-6">
             <div class="surface rounded-2xl p-5">
@@ -971,6 +1227,27 @@
               into kilograms of waste avoided, CO₂, water, money, or other
               scientific metrics without a defensible methodology.</p>
           </div>
+          <section class="surface rounded-3xl p-5 sm:p-6 mt-6">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <p class="text-xs uppercase tracking-[.16em] text-primary font-black">Reflections</p>
+                <h2 class="text-xl font-black mt-2">What you are noticing.</h2>
+              </div>
+              <button @click="go('reconnect')" class="btn btn-soft">Reconnect</button>
+            </div>
+            <p class="text-sm text-muted mt-3" x-show="reflections.length === 0">Reflections saved from Reconnect modules will appear here without scores or streaks.</p>
+            <div class="grid md:grid-cols-2 gap-3 mt-4" x-show="reflections.length > 0">
+              <template x-for="entry in reflections" :key="entry.id">
+                <article class="surface-flat rounded-2xl p-4">
+                  <div class="flex justify-between gap-3">
+                    <div><p class="text-xs text-primary font-black" x-text="entry.moduleTitle"></p><p class="text-xs text-muted mt-1" x-text="formatDate(entry.date)"></p></div>
+                    <button @click="deleteReflection(entry.id)" class="w-9 h-9 rounded-full soft flex items-center justify-center" aria-label="Delete reflection"><svg class="w-4 h-4"><use href="#i-trash"></use></svg></button>
+                  </div>
+                  <p class="text-sm mt-3 whitespace-pre-wrap" x-text="entry.note"></p>
+                </article>
+              </template>
+            </div>
+          </section>
           <div class="grid xl:grid-cols-[1fr_330px] gap-5 mt-6">
             <div class="surface rounded-3xl overflow-hidden">
               <div
@@ -1050,14 +1327,26 @@
         <!-- SWAPS & ALTERNATIVES -->
         <section x-show="view === 'swaps'" x-transition.opacity="">
           <div class="max-w-4xl">
-            <p class="text-sm font-bold text-primary">Items &amp; Alternatives
-            </p>
+            <p class="text-sm font-bold text-primary">Search Zerra</p>
             <h1 class="text-3xl sm:text-4xl font-black tracking-tight mt-1">
-              Rethink what you use.</h1>
-            <p class="text-muted mt-3">Use what you already have first. When a
-              replacement is genuinely needed, explore possibilities you may
-              never have considered.</p>
+              What are you holding, using, eating, or trying to do?</h1>
+            <p class="text-muted mt-3">Start with an item, material, food,
+              remainder, need, action, or household question. Zerra will favor
+              continued use, care, repair, sharing, and return before replacement.</p>
           </div>
+          <template x-if="goVeganContextForQuery(swapsSearch)">
+            <aside class="companion-card rounded-3xl p-5 mt-4" aria-label="Related Go Vegan guidance">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div><p class="text-xs uppercase tracking-[.16em] font-black">Companion: Go Vegan</p><h2 class="text-lg font-black mt-1" x-text="goVeganContextForQuery(swapsSearch).title"></h2><p class="text-sm mt-1" x-text="goVeganContextForQuery(swapsSearch).detail"></p></div>
+                <a href="https://michaelsboost.com/govegan/" target="_blank" rel="noopener noreferrer" class="btn btn-soft shrink-0">Open Go Vegan ↗</a>
+              </div>
+            </aside>
+          </template>
+          <template x-if="seedProfileForQuery(swapsSearch)">
+            <button @click="openSeedFromSearch(seedProfileForQuery(swapsSearch))" class="w-full surface rounded-3xl p-5 mt-4 flex items-center justify-between gap-4 text-left">
+              <div class="flex items-center gap-3"><span class="text-3xl" x-text="seedProfileForQuery(swapsSearch).emoji"></span><div><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Food, seeds &amp; soil</p><h2 class="text-lg font-black mt-1" x-text="seedProfileForQuery(swapsSearch).name + ': see every possible path'"></h2><p class="text-sm text-muted mt-1">Edible, saveable, plantable, shareable, compostable, and important limits.</p></div></div><span aria-hidden="true">→</span>
+            </button>
+          </template>
           <!-- Search & filters -->
           <div class="surface rounded-3xl p-4 sm:p-5 mt-6">
             <div class="flex flex-col lg:flex-row gap-3">
@@ -1074,13 +1363,13 @@
               <button @click="clearSwapsSearch()"
                 class="btn btn-soft shrink-0">Clear</button>
             </div>
-            <div class="flex flex-wrap gap-2 mt-3">
+            <div class="flex gap-2 overflow-x-auto scrollbar-none mt-3 pb-1">
               <template :key="tag" x-for="tag in swapsSearchTags">
                 <button :class="swapsSearch === tag &amp;&amp; 'active'"
                   @click="swapsSearch = tag" class="chip" x-text="tag"></button>
               </template>
             </div>
-            <div class="flex flex-wrap gap-2 mt-3">
+            <div class="flex gap-2 overflow-x-auto scrollbar-none mt-3 pb-1">
               <button :class="!swapsFilter &amp;&amp; 'active'"
                 @click="swapsFilter=''; swapsPriority=''; swapFilterCacheKey=null; persist()" class="chip">All</button>
               <button :class="swapsFilter==='free' &amp;&amp; 'active'"
@@ -1128,8 +1417,29 @@
                 x-text="filteredSwapItems().length + ' items found'"></span>
             </div>
           </div>
+          <!-- Phase 5 unified, relational search -->
+          <div class="mt-6 space-y-6" x-show="swapsSearch.trim()">
+            <div class="flex items-end justify-between gap-3">
+              <div><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Connected knowledge</p><h2 class="text-xl font-black mt-1">Results across Zerra</h2></div>
+              <span class="text-xs text-muted" x-text="groupedSearchResults().reduce((total, group) => total + group.rows.length, 0) + ' useful paths'"></span>
+            </div>
+            <template x-for="group in groupedSearchResults()" :key="group.id">
+              <section class="surface rounded-3xl p-4 sm:p-5" :aria-labelledby="'search-group-' + group.id">
+                <div class="flex items-center justify-between gap-3 mb-3"><h3 class="font-black" :id="'search-group-' + group.id" x-text="group.label"></h3><span class="text-xs text-muted" x-text="group.rows.length"></span></div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                  <template x-for="item in group.rows" :key="group.id + '-' + item.id">
+                    <button type="button" class="surface-flat rounded-2xl p-4 text-left card-hover" @click="openKnowledgeResult(group, item)">
+                      <p class="font-black" x-text="group.title(item)"></p>
+                      <p class="text-sm text-muted mt-1 line-clamp-2" x-text="group.detail(item)"></p>
+                    </button>
+                  </template>
+                </div>
+              </section>
+            </template>
+            <div class="surface rounded-2xl p-6 text-center" x-show="groupedSearchResults().length === 0"><p class="font-black">No connected result yet</p><p class="text-sm text-muted mt-1">Try fewer words or a simpler object, material, food, or action.</p></div>
+          </div>
           <!-- Search results -->
-          <div class="mt-6" x-show="swapsSearch.trim() || swapsFilter || swapsPriority">
+          <div class="mt-6" x-show="!swapsSearch.trim() &amp;&amp; (swapsFilter || swapsPriority)">
             <div class="flex items-center justify-between gap-3 mb-4">
               <div>
                 <h2 class="text-xl font-black" x-text="swapsSearch.trim() ? 'Search results' : 'Filtered items'"></h2>
@@ -1509,13 +1819,13 @@
     </div>
     <!-- Mobile nav -->
     <nav aria-label="Mobile navigation"
-      class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-theme nav-safe"
+      class="zerra-bottom-nav lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-theme nav-safe"
       style="background:var(--header);backdrop-filter:blur(16px)">
       <div class="grid grid-cols-5 px-1">
         <template :key="item.id" x-for="item in primaryNav">
-          <button :class="view === item.id ? 'text-primary' : 'text-muted'"
+          <button :class="navActive(item.id) ? 'text-primary' : 'text-muted'"
             @click="go(item.id)"
-            class="min-h-[66px] flex flex-col items-center justify-center gap-1 text-[10px] font-bold">
+            class="zerra-bottom-nav-item min-h-[66px] flex flex-col items-center justify-center gap-1 text-[10px] font-bold">
             <svg class="w-5 h-5">
               <use :href="'#'+item.icon"></use>
             </svg>
@@ -1525,7 +1835,7 @@
       </div>
     </nav>
   </div>
-  Content modal
+  <!-- Content modal -->
   <div @click.self="contentOpen=false"
     class="fixed inset-0 z-[70] modal-backdrop p-3 sm:p-6 overflow-y-auto"
     x-cloak="" x-show="contentOpen" x-transition.opacity="">
@@ -1598,7 +1908,7 @@
       </div>
     </article>
   </div>
-  Challenge modal
+  <!-- Challenge modal -->
   <div @click.self="challengeOpen=false"
     class="fixed inset-0 z-[70] modal-backdrop p-3 sm:p-6 overflow-y-auto"
     x-cloak="" x-show="challengeOpen" x-transition.opacity="">
@@ -1639,7 +1949,7 @@
       </div>
     </article>
   </div>
-  Action log modal
+  <!-- Action log modal -->
   <div @click.self="actionOpen=false"
     class="fixed inset-0 z-[80] modal-backdrop p-3 sm:p-6 overflow-y-auto"
     x-cloak="" x-show="actionOpen" x-transition.opacity="">
@@ -1697,11 +2007,11 @@
       </div>
     </form>
   </div>
-  Settings
+  <!-- Settings -->
   <div @click.self="settingsOpen=false"
     class="fixed inset-0 z-[80] modal-backdrop flex justify-end" x-cloak=""
     x-show="settingsOpen" x-transition.opacity="">
-    <aside class="w-full max-w-md h-full overflow-y-auto p-5 sm:p-6"
+    <aside class="w-full max-w-md h-full overflow-y-auto p-5 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="settings-title"
       style="background:var(--surface)" x-show="settingsOpen"
       x-transition:enter="transition ease-out duration-200"
       x-transition:enter-end="translate-x-0"
@@ -1710,7 +2020,7 @@
         <div>
           <p class="text-xs uppercase tracking-[.16em] text-primary font-black">
             Zerra</p>
-          <h2 class="text-2xl font-black mt-1">Settings</h2>
+          <h2 id="settings-title" class="text-2xl font-black mt-1">Settings</h2>
         </div>
         <button @click="settingsOpen=false" aria-label="Close settings"
           class="w-11 h-11 rounded-xl soft flex items-center justify-center"><svg
@@ -1742,32 +2052,34 @@
         </div>
       </section>
       <section class="mt-7">
-        <h3 class="font-black">Lifestyle path</h3>
-        <p class="text-sm text-muted mt-1">Your path changes recommendations,
-          not your worth or commitment.</p>
+        <h3 class="font-black">Recommendation path</h3>
+        <p class="text-sm text-muted mt-1">Choose how Zerra prioritizes guidance. This changes the Today practice, Learn Next cards, recommended Practice steps, and your next Journey step. It never hides the rest of the app, changes your completed progress, or judges your commitment.</p>
         <div class="space-y-3 mt-3">
           <template :key="path.id" x-for="path in paths">
             <button
               :style="profile.path===path.id?'border-color:var(--primary);background:var(--primary-soft)':''"
+              :aria-pressed="profile.path===path.id"
               @click="profile.path=path.id; persist()"
               class="w-full surface-flat rounded-2xl p-4 text-left">
-              <div class="font-black" x-text="path.name"></div>
+              <div class="flex items-center justify-between gap-3"><div class="font-black" x-text="path.name"></div><span class="text-xs font-black text-primary" x-show="profile.path===path.id">Active</span></div>
               <div class="text-xs text-muted mt-1" x-text="path.short"></div>
             </button>
           </template>
         </div>
       </section>
       <section class="mt-7">
-        <h3 class="font-black">Name</h3>
-        <input @change="persist()" class="input mt-3" maxlength="40"
-          placeholder="Optional" x-model.trim="profile.name" />
-      </section>
-      <section class="mt-7">
         <h3 class="font-black">Your data</h3>
-        <p class="text-sm text-muted mt-1">Zerra stores your path, Journey
+        <p class="text-sm text-muted mt-1">Zerra stores your recommendation path, Journey
           progress, saved items, actions, and theme locally in this browser.</p>
         <button @click="resetData()" class="btn btn-danger mt-4">Reset Zerra
           data</button>
+      </section>
+      <section class="mt-7 rounded-2xl primary-soft p-5">
+        <p class="text-xs uppercase tracking-[.16em] text-primary font-black">About Zerra</p>
+        <h3 class="font-black mt-2">A companion for reconnecting with what sustains us.</h3>
+        <p class="text-sm text-muted mt-2">Zerra helps people use less, care for what already exists, return materials responsibly, restore living systems, and understand the ripple effects of everyday life through Longevity, Integrity, Flourishing, and Equilibrium.</p>
+        <p class="text-sm text-muted mt-3">Zerra and Go Vegan remain separate tools. When a question centers animals or animal-derived products, Go Vegan provides the deeper animal relationship and plant-based guidance.</p>
+        <a href="https://michaelsboost.com/govegan/" target="_blank" rel="noopener noreferrer" class="btn btn-soft mt-4">Visit Go Vegan ↗</a>
       </section>
       <section class="mt-8 pt-6 border-t border-theme">
 <div class="space-y-5">
@@ -1790,8 +2102,6 @@
  <template x-if="itemGuideSelected"><div class="space-y-4"><button class="btn" @click="itemGuideSelected=null">← Results</button><div class="card p-5"><p class="text-xs font-black uppercase tracking-widest text-[var(--muted)]">Item Guide</p><h2 class="text-2xl font-black mt-1" x-text="itemGuideSelected.name"></h2><p class="text-sm mt-2" x-text="itemGuideSelected.summary"></p></div><div class="card p-5"><h3 class="font-black">Use what you already have first</h3><p class="text-sm text-[var(--muted)] mt-2">Keep, maintain, repair, refill, or repurpose what is already available when practical and safe before buying a replacement.</p></div><template x-for="alt in itemGuideAlternatives(itemGuideSelected)" :key="alt.id"><div class="card p-5"><span class="badge" x-text="alt.type"></span><h3 class="font-black mt-2" x-text="alt.name"></h3><p class="text-sm mt-2" x-text="alt.description"></p></div></template><template x-for="dd in itemGuideDisposal(itemGuideSelected)" :key="dd.id"><div class="card p-5"><p class="text-xs font-black uppercase tracking-widest text-[var(--muted)]">End of life</p><h3 class="font-black mt-1" x-text="dd.name || dd.item"></h3><p class="text-sm mt-2" x-text="dd.note"></p><div class="space-y-2 mt-4"><template x-for="opt in dd.options" :key="opt.rank+'-'+opt.action"><div class="rounded-xl border border-[var(--line)] p-3"><b class="text-sm" x-text="opt.action"></b><div class="text-xs text-[var(--muted)] mt-1" x-text="opt.why"></div></div></template></div></div></template></div></template>
 </div>
 </div></div>
-
-
 
 <script src="https://michaelsboost.com/TailwindCSSMod/tailwind-mod.min.js"></script>
     
