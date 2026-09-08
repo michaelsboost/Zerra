@@ -71,10 +71,64 @@ function zerraApp() {
 
     primaryNav: [
       {id:'home',label:'Today',icon:'i-home'},
+      {id:'why',label:'Why',icon:'i-info'},
       {id:'explore',label:'Discover',icon:'i-compass'},
       {id:'journey',label:'Practice',icon:'i-route'},
       {id:'impact',label:'My Path',icon:'i-leaf'},
       {id:'swaps',label:'Search',icon:'i-search'}
+    ],
+
+    impactFacts: [
+      {
+        id:'resources', eyebrow:'THE MATERIAL STORY', title:'We are consuming physical Earth.', value:'106', unit:'billion tonnes', year:'1970 → 2024',
+        summary:'Global natural-resource use grew from 30 billion tonnes in 1970 to 106 billion tonnes in 2024 — more than tripling in five decades.',
+        comparison:'About 290 million tonnes a day, 12 million tonnes an hour, or 3,360 tonnes each second when the annual total is expressed as a time-equivalent.',
+        note:'Time equivalents are mathematical translations of an annual figure, not second-by-second measurements.',
+        sourceName:'UNEP · Global Resources Outlook 2024', sourceUrl:'https://www.unep.org/resources/Global-Resource-Outlook-2024',
+        photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Chahar_Youyi_Houqi_-_Xidajing-Dengjia_open_pit_mine_-_Daliuhaoxiang_town_IMG_4084_Ulanqab_Inner_Mongolia.jpg?width=1000',
+        photoAlt:'Aerial view of an open-pit mine and nearby town in Inner Mongolia.', photoCredit:'Bjoertvedt · Wikimedia Commons · CC BY-SA 4.0', photoUrl:'https://commons.wikimedia.org/wiki/File:Chahar_Youyi_Houqi_-_Xidajing-Dengjia_open_pit_mine_-_Daliuhaoxiang_town_IMG_4084_Ulanqab_Inner_Mongolia.jpg',
+        action:'Refuse unnecessary demand. Maintain, repair, share, and keep useful materials in circulation longer.'
+      },
+      {
+        id:'plastic', eyebrow:'PLASTIC', title:'A material designed to last can become waste almost immediately.', value:'353', unit:'million tonnes', year:'2019',
+        summary:'The world generated 353 million tonnes of plastic waste in 2019. After recycling losses, only 9% was ultimately recycled.',
+        comparison:'That annual waste total is roughly 967,000 tonnes a day, 40,300 tonnes an hour, 672 tonnes a minute, or 11.2 tonnes a second as a time-equivalent.',
+        note:'OECD reports 19% was incinerated, almost 50% went to sanitary landfill, and 22% was mismanaged, openly burned, dumped, or leaked.',
+        sourceName:'OECD · Global Plastics Outlook', sourceUrl:'https://www.oecd.org/en/publications/2022/02/global-plastics-outlook_a653d1c9.html',
+        photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Beach_plastic_pollution.jpg?width=1000', photoAlt:'Plastic pollution washed onto a beach near the mouth of the Hawkesbury River in Australia.',
+        photoCredit:'David Abrahams · Wikimedia Commons', photoUrl:'https://commons.wikimedia.org/wiki/File:Beach_plastic_pollution.jpg',
+        action:'Use what you own. Refuse unnecessary single-use items, refill and reuse when practical, then recycle only where the material is actually accepted.'
+      },
+      {
+        id:'food', eyebrow:'FOOD', title:'We waste food — and everything used to produce it.', value:'1.05', unit:'billion tonnes', year:'2022',
+        summary:'Food waste at household, food-service, and retail levels reached 1.05 billion tonnes in 2022 — 19% of food available to consumers.',
+        comparison:'Households alone wasted 631 million tonnes. UNEP estimates more than one billion meals are wasted in households every day.',
+        note:'The 1.05 billion-tonne estimate includes edible and inedible parts and is separate from food lost earlier in the supply chain.',
+        sourceName:'UNEP · Food Waste Index Report 2024', sourceUrl:'https://www.unep.org/resources/publication/food-waste-index-report-2024',
+        photo:'https://commons.wikimedia.org/wiki/Special:FilePath/GI_Market_food_waste.jpg?width=1000', photoAlt:'Discarded food visible inside a market dumpster.',
+        photoCredit:'Taz · Wikimedia Commons · CC BY 2.0', photoUrl:'https://commons.wikimedia.org/wiki/File:GI_Market_food_waste.jpg',
+        action:'Plan around food you already have, store it well, use leftovers, freeze or preserve surplus, share safe excess, and compost unavoidable scraps.'
+      },
+      {
+        id:'textiles', eyebrow:'TEXTILES', title:'Fast turnover turns usable material into a waste stream.', value:'92', unit:'million tonnes', year:'each year',
+        summary:'UNEP reports that 92 million tonnes of textile waste are produced globally every year.',
+        comparison:'UNEP describes the scale as the equivalent of a garbage truck full of clothing being landfilled or incinerated every second.',
+        note:'The comparison communicates scale; textile systems, collection, reuse, recycling, dumping, and disposal differ substantially by place.',
+        sourceName:'UNEP · International Day of Zero Waste 2025', sourceUrl:'https://www.unep.org/news-and-stories/press-release/unsustainable-fashion-and-textiles-focus-international-day-zero',
+        photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Textile_Recycling_Container_and_Waste_Containers.jpg?width=1000', photoAlt:'A textile collection container beside waste containers.',
+        photoCredit:'Dcapillae · Wikimedia Commons · CC BY-SA 4.0', photoUrl:'https://commons.wikimedia.org/wiki/File:Textile_Recycling_Container_and_Waste_Containers.jpg',
+        action:'Wear clothing longer. Mend, alter, swap, share, repurpose, and buy secondhand when something is genuinely needed.'
+      },
+      {
+        id:'ewaste', eyebrow:'E-WASTE', title:'Our electronics contain resources worth keeping in circulation.', value:'62', unit:'million tonnes', year:'2022',
+        summary:'The world generated 62 million tonnes of e-waste in 2022. Only 22.3% was documented as formally collected and recycled.',
+        comparison:'UNITAR compares 62 million tonnes with the weight of about 107,000 of the world’s largest passenger aircraft.',
+        note:'E-waste includes discarded products with a plug or battery. Repair, reuse, safe collection, and material recovery all matter.',
+        sourceName:'UNITAR · Global E-waste Monitor 2024', sourceUrl:'https://unitar.org/about/news-stories/press/global-e-waste-monitor-2024-electronic-waste-rising-five-times-faster-documented-e-waste-recycling',
+        photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Electronic_waste_at_Agbogbloshie,_Ghana.jpg?width=1000', photoAlt:'Electronic waste at Agbogbloshie in Accra, Ghana.',
+        photoCredit:'Muntaka Chasant · Wikimedia Commons · CC BY-SA 4.0', photoUrl:'https://commons.wikimedia.org/wiki/File:Electronic_waste_at_Agbogbloshie,_Ghana.jpg',
+        action:'Maintain devices, repair when practical, keep working electronics in use, resell or donate suitable devices, and use verified e-waste collection at end of life.'
+      }
     ],
 
     lifeFramework: [

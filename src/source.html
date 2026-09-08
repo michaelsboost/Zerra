@@ -1,5 +1,16 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<div x-data="zerraApp()" x-init="init()" @keydown.escape.window="closeModals()" x-cloak>
+<div id="zerra-boot-shell" class="zerra-boot-shell" role="status" aria-live="polite">
+  <div class="zerra-boot-brand"><img src="imgs/logo.svg" alt="" width="34" height="34"><strong>Zerra</strong></div>
+  <div class="zerra-boot-card">
+    <div class="zerra-boot-copy">
+      <span>ZERO WASTE, WITHOUT THE WAIT</span>
+      <h1>Rethink Waste.<br>Reconnect with Earth.</h1>
+      <p>Use what you already have first.</p>
+    </div>
+    <img class="zerra-boot-image" src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" fetchpriority="high">
+  </div>
+</div>
+<div x-data="zerraApp()" x-init="init(); document.getElementById('zerra-boot-shell')?.remove()" @keydown.escape.window="closeModals()" x-cloak>
   <svg aria-hidden="true" class="hidden">
     <symbol id="i-home" viewbox="0 0 24 24">
       <path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
@@ -294,7 +305,7 @@
                   </div>
                 </div>
                 <div class="zerra-hero-visual" aria-hidden="true">
-                  <img src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" />
+                  <img src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" loading="eager" fetchpriority="high" decoding="async" />
                 </div>
                 <div class="mt-7">
                   <label class="relative block">
@@ -1148,6 +1159,53 @@
             </aside>
           </div>
         </section>
+        <!-- WHY ZERO WASTE -->
+        <section x-show="view === 'why'" x-transition.opacity="" class="impact-story">
+          <article class="impact-opening rounded-[2rem] overflow-hidden">
+            <div class="impact-opening-inner">
+              <p class="text-xs uppercase tracking-[.2em] font-black">Why zero waste?</p>
+              <h1 class="text-4xl sm:text-6xl font-black tracking-tight mt-3">There is no “away.”</h1>
+              <p class="text-lg sm:text-xl mt-4 max-w-3xl">Everything we extract, manufacture, consume, and discard goes somewhere. Zerra makes the scale visible — then connects it to actions that keep resources in use longer.</p>
+              <div class="flex flex-wrap gap-2 mt-6"><a href="#impact-evidence" class="btn btn-primary">See the evidence ↓</a><button @click="go('explore')" class="btn btn-soft">Start with what I can do</button></div>
+            </div>
+          </article>
+
+          <div id="impact-evidence" class="mt-8 space-y-8 scroll-mt-24">
+            <template x-for="fact in impactFacts" :key="fact.id">
+              <article class="impact-evidence surface rounded-[2rem] overflow-hidden">
+                <div class="impact-photo-wrap">
+                  <img :src="fact.photo" :alt="fact.photoAlt" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" class="impact-photo" />
+                  <div class="impact-photo-shade"></div>
+                  <div class="impact-number">
+                    <p class="text-xs uppercase tracking-[.2em] font-black" x-text="fact.eyebrow"></p>
+                    <div class="mt-2"><span class="impact-value" x-text="fact.value"></span> <span class="impact-unit" x-text="fact.unit"></span></div>
+                    <p class="text-sm font-bold mt-2" x-text="fact.year"></p>
+                  </div>
+                </div>
+                <div class="p-5 sm:p-7">
+                  <h2 class="text-2xl sm:text-3xl font-black" x-text="fact.title"></h2>
+                  <p class="text-base text-muted leading-relaxed mt-3" x-text="fact.summary"></p>
+                  <div class="grid md:grid-cols-2 gap-4 mt-5">
+                    <div class="rounded-2xl primary-soft p-4"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Make the number real</p><p class="text-sm font-bold mt-2" x-text="fact.comparison"></p></div>
+                    <div class="surface-flat rounded-2xl p-4"><p class="text-xs uppercase tracking-[.16em] text-earth font-black">What can I do?</p><p class="text-sm font-bold mt-2" x-text="fact.action"></p></div>
+                  </div>
+                  <div class="impact-method mt-5"><svg class="w-4 h-4 shrink-0"><use href="#i-info"></use></svg><p class="text-xs text-muted" x-text="fact.note"></p></div>
+                  <div class="flex flex-wrap gap-x-5 gap-y-2 mt-5 text-xs">
+                    <a class="text-primary underline font-bold" :href="fact.sourceUrl" target="_blank" rel="noopener noreferrer" x-text="fact.sourceName + ' ↗'"></a>
+                    <a class="text-muted underline" :href="fact.photoUrl" target="_blank" rel="noopener noreferrer" x-text="'Photo: ' + fact.photoCredit + ' ↗'"></a>
+                  </div>
+                </div>
+              </article>
+            </template>
+          </div>
+
+          <article class="impact-action surface botanical rounded-[2rem] p-6 sm:p-9 mt-8 text-center">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">The point is not perfection</p>
+            <h2 class="text-3xl sm:text-5xl font-black mt-3">See it. Understand it. Change what you can.</h2>
+            <p class="text-muted max-w-2xl mx-auto mt-4">Use what you already have. Refuse unnecessary demand. Reduce. Reuse. Repair. Repurpose. Share. Compost. Recycle. Dispose responsibly.</p>
+            <div class="flex flex-wrap justify-center gap-3 mt-6"><button @click="go('explore')" class="btn btn-primary">Explore Zerra</button><button @click="go('journey')" class="btn btn-soft">Build the practice</button></div>
+          </article>
+        </section>
         <!-- IMPACT -->
         <section x-show="view === 'impact'" x-transition.opacity="">
           <div
@@ -1792,7 +1850,7 @@
     <nav aria-label="Mobile navigation"
       class="zerra-bottom-nav lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-theme nav-safe"
       style="background:var(--header);backdrop-filter:blur(16px)">
-      <div class="grid grid-cols-5 px-1">
+      <div class="grid grid-cols-6 px-1">
         <template :key="item.id" x-for="item in primaryNav">
           <button :class="navActive(item.id) ? 'text-primary' : 'text-muted'"
             @click="go(item.id)"

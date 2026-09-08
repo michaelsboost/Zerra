@@ -563,3 +563,12 @@ See: [LICENSE](LICENSE)
 
 Michael Schwartz\
 https://michaelsboost.com
+
+
+### Impact photo performance
+Impact documentary photos request smaller Commons thumbnails, lazy-load below the fold, and are runtime-cached by the service worker after a successful view so repeat/offline visits are more resilient. The home hero remains a local, eager-loaded app-shell asset.
+
+
+## Impact release
+
+Version 1.1.0 adds Zerra’s new **Why** experience: sourced impact data, real documentary photography, Follow the Waste, planetary consequences, and a direct transition from evidence to practical zero-waste action.

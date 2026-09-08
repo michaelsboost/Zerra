@@ -29,7 +29,18 @@
   <body>
 
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<div x-data="zerraApp()" x-init="init()" @keydown.escape.window="closeModals()" x-cloak>
+<div id="zerra-boot-shell" class="zerra-boot-shell" role="status" aria-live="polite">
+  <div class="zerra-boot-brand"><img src="imgs/logo.svg" alt="" width="34" height="34"><strong>Zerra</strong></div>
+  <div class="zerra-boot-card">
+    <div class="zerra-boot-copy">
+      <span>ZERO WASTE, WITHOUT THE WAIT</span>
+      <h1>Rethink Waste.<br>Reconnect with Earth.</h1>
+      <p>Use what you already have first.</p>
+    </div>
+    <img class="zerra-boot-image" src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" fetchpriority="high">
+  </div>
+</div>
+<div x-data="zerraApp()" x-init="init(); document.getElementById('zerra-boot-shell')?.remove()" @keydown.escape.window="closeModals()" x-cloak>
   <svg aria-hidden="true" class="hidden">
     <symbol id="i-home" viewbox="0 0 24 24">
       <path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
@@ -324,7 +335,7 @@
                   </div>
                 </div>
                 <div class="zerra-hero-visual" aria-hidden="true">
-                  <img src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" />
+                  <img src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" loading="eager" fetchpriority="high" decoding="async" />
                 </div>
                 <div class="mt-7">
                   <label class="relative block">
@@ -1178,6 +1189,194 @@
             </aside>
           </div>
         </section>
+        <!-- WHY ZERO WASTE -->
+        <section x-show="view === 'why'" x-transition.opacity="" class="impact-story">
+          <article class="impact-opening rounded-[2rem] overflow-hidden">
+            <div class="impact-opening-inner">
+              <p class="text-xs uppercase tracking-[.2em] font-black">Why zero waste?</p>
+              <h1 class="text-4xl sm:text-6xl font-black tracking-tight mt-3">There is no “away.”</h1>
+              <p class="text-lg sm:text-xl mt-4 max-w-3xl">Everything we extract, manufacture, consume, and discard goes somewhere. Zerra makes the scale visible — then connects it to actions that keep resources in use longer.</p>
+              <div class="flex flex-wrap gap-2 mt-6"><a href="#impact-evidence" class="btn btn-primary">See the evidence ↓</a><button @click="go('explore')" class="btn btn-soft">Start with what I can do</button></div>
+            </div>
+          </article>
+
+          <nav class="impact-jump surface rounded-2xl p-3 mt-4" aria-label="Impact story sections">
+            <a href="#impact-evidence">The numbers</a><a href="#follow-waste">Where is away?</a><a href="#consequences">Consequences</a><a href="#take-action">Take action</a><a href="#impact-sources">Sources</a>
+          </nav>
+
+          <div id="impact-evidence" class="mt-8 space-y-8 scroll-mt-24">
+            <template x-for="fact in impactFacts" :key="fact.id">
+              <article class="impact-evidence surface rounded-[2rem] overflow-hidden">
+                <div class="impact-photo-wrap">
+                  <img :src="fact.photo" :alt="fact.photoAlt" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" class="impact-photo" @error="$el.closest('.impact-photo-wrap').classList.add('image-unavailable'); $el.style.display='none'" />
+                  <div class="impact-photo-shade"></div>
+                  <div class="impact-number">
+                    <p class="text-xs uppercase tracking-[.2em] font-black" x-text="fact.eyebrow"></p>
+                    <div class="mt-2"><span class="impact-value" x-text="fact.value"></span> <span class="impact-unit" x-text="fact.unit"></span></div>
+                    <p class="text-sm font-bold mt-2" x-text="fact.year"></p>
+                  </div>
+                </div>
+                <div class="p-5 sm:p-7">
+                  <h2 class="text-2xl sm:text-3xl font-black" x-text="fact.title"></h2>
+                  <p class="text-base text-muted leading-relaxed mt-3" x-text="fact.summary"></p>
+                  <div class="grid md:grid-cols-2 gap-4 mt-5">
+                    <div class="rounded-2xl primary-soft p-4"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">Make the number real</p><p class="text-sm font-bold mt-2" x-text="fact.comparison"></p></div>
+                    <div class="surface-flat rounded-2xl p-4"><p class="text-xs uppercase tracking-[.16em] text-earth font-black">What can I do?</p><p class="text-sm font-bold mt-2" x-text="fact.action"></p></div>
+                  </div>
+                  <div class="impact-method mt-5"><svg class="w-4 h-4 shrink-0"><use href="#i-info"></use></svg><p class="text-xs text-muted" x-text="fact.note"></p></div>
+                  <div class="flex flex-wrap gap-x-5 gap-y-2 mt-5 text-xs">
+                    <a class="text-primary underline font-bold" :href="fact.sourceUrl" target="_blank" rel="noopener noreferrer" x-text="fact.sourceName + ' ↗'"></a>
+                    <a class="text-muted underline" :href="fact.photoUrl" target="_blank" rel="noopener noreferrer" x-text="'Photo: ' + fact.photoCredit + ' ↗'"></a>
+                  </div>
+                </div>
+              </article>
+            </template>
+          </div>
+
+          <article id="follow-waste" class="surface rounded-[2rem] p-5 sm:p-8 mt-8 follow-waste scroll-mt-24">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">Follow the waste</p>
+            <h2 class="text-3xl sm:text-5xl font-black mt-2">Where is “away”?</h2>
+            <p class="text-muted mt-3 max-w-3xl">A discarded object does not disappear. Its story continues through collection, sorting, reuse, recycling, combustion, landfill, or leakage into the environment.</p>
+            <div class="waste-chain mt-6" aria-label="Material lifecycle">
+              <span>Extraction</span><b>→</b><span>Manufacture</span><b>→</b><span>Use</span><b>→</b><span>Discard</span><b>→</b><span>Where next?</span>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
+              <article class="waste-destination"><div class="text-2xl">♻️</div><h3>Recycling</h3><p>Useful, but not prevention. For global plastic waste in 2019, only 9% was ultimately recycled.</p></article>
+              <article class="waste-destination"><div class="text-2xl">🗑️</div><h3>Landfill</h3><p>Almost 50% of global plastic waste in 2019 went to sanitary landfills. The material was moved, not erased.</p></article>
+              <article class="waste-destination"><div class="text-2xl">🔥</div><h3>Incineration</h3><p>19% of global plastic waste in 2019 was incinerated. Burning changes the material and can recover energy, but it is still an end-of-life pathway.</p></article>
+              <article class="waste-destination"><div class="text-2xl">🌊</div><h3>Environment</h3><p>22% was mismanaged, openly burned, dumped, or leaked. UNEP estimates 19–23 million tonnes of plastic leak into aquatic ecosystems each year.</p></article>
+            </div>
+            <div class="plastic-100 mt-6">
+              <div><strong>9</strong><span>recycled</span></div><div><strong>19</strong><span>incinerated</span></div><div><strong>~50</strong><span>landfilled</span></div><div><strong>22</strong><span>mismanaged</span></div>
+            </div>
+            <p class="text-xs text-muted mt-3">Imagine 100 units of global plastic waste in 2019. OECD's reported shares are shown above; rounding means totals are approximate.</p>
+            <div class="flex flex-wrap gap-x-5 gap-y-2 mt-4 text-xs"><a class="text-primary underline font-bold" href="https://www.oecd.org/en/publications/global-plastics-outlook_de747aef-en/full-report/component-6.html" target="_blank" rel="noopener noreferrer">OECD · Global Plastics Outlook ↗</a><a class="text-primary underline font-bold" href="https://www.unep.org/topics/ocean-seas-and-coasts/ecosystem-degradation-pollution/plastic-pollution-marine-litter" target="_blank" rel="noopener noreferrer">UNEP · Plastic pollution & marine litter ↗</a></div>
+          </article>
+
+          <article id="consequences" class="surface rounded-[2rem] overflow-hidden mt-8 consequence-story scroll-mt-24">
+            <div class="consequence-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.72)),url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Preparation_area_between_the_open_pit_mine_Hambach_and_the_Hambach_forest_27.jpg?width=1000')">
+              <div><p class="text-xs uppercase tracking-[.2em] font-black">The impact starts before the trash</p><h2>Waste begins with extraction.</h2></div>
+            </div>
+            <div class="p-5 sm:p-8">
+              <p class="text-muted leading-relaxed">The materials in our food, homes, clothing, electronics and packaging have to come from somewhere. UNEP reports that global resource use rose from about 30 billion tonnes in 1970 to 106 billion tonnes, and that extraction and processing account for more than 60% of planet-warming emissions.</p>
+              <div class="consequence-stat-grid mt-6"><div><strong>3×</strong><span>Resource extraction has tripled over the past five decades.</span></div><div><strong>&gt;60%</strong><span>of planet-warming emissions are tied to resource extraction and processing.</span></div><div><strong>90%</strong><span>of land-related biodiversity loss and water stress is linked to biomass extraction and processing.</span></div></div>
+              <div class="flex flex-wrap gap-x-5 gap-y-2 mt-5 text-xs"><a class="text-primary underline font-bold" href="https://www.unep.org/resources/Global-Resource-Outlook-2024" target="_blank" rel="noopener noreferrer">UNEP · Global Resources Outlook 2024 ↗</a><a class="text-muted underline" href="https://commons.wikimedia.org/wiki/File:Preparation_area_between_the_open_pit_mine_Hambach_and_the_Hambach_forest_27.jpg" target="_blank" rel="noopener noreferrer">Photo: GPSLeo · CC BY-SA 4.0 ↗</a></div>
+            </div>
+          </article>
+
+          <article class="surface rounded-[2rem] overflow-hidden mt-8 consequence-story">
+            <div class="consequence-photo" style="background-image:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.76)),url('https://commons.wikimedia.org/wiki/Special:Redirect/file/Beach_plastic_pollution.jpg?width=1000')">
+              <div><p class="text-xs uppercase tracking-[.2em] font-black">Wildlife & ecosystems</p><h2>Our waste enters someone else's habitat.</h2></div>
+            </div>
+            <div class="p-5 sm:p-8">
+              <p class="text-muted leading-relaxed">Plastic pollution does not stay neatly inside human systems. UNEP documents ingestion and entanglement among marine species, disruption of food chains, and damage to habitats. Larger plastics also fragment into smaller particles that persist and move through the environment.</p>
+              <div class="rounded-2xl primary-soft p-4 mt-5"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">The connection</p><p class="font-bold mt-2">Street → stormwater → stream → river → ocean → habitat. “Away” can become another living being's environment.</p></div>
+              <div class="flex flex-wrap gap-x-5 gap-y-2 mt-5 text-xs"><a class="text-primary underline font-bold" href="https://www.unep.org/topics/ocean-seas-and-coasts/ecosystem-degradation-pollution/plastic-pollution-marine-litter" target="_blank" rel="noopener noreferrer">UNEP · Plastic pollution & marine litter ↗</a><a class="text-muted underline" href="https://commons.wikimedia.org/wiki/File:Beach_plastic_pollution.jpg" target="_blank" rel="noopener noreferrer">Photo: Wikimedia Commons · CC BY-SA 4.0 ↗</a></div>
+            </div>
+          </article>
+
+          <article class="surface rounded-[2rem] p-5 sm:p-8 mt-8 consequence-story">
+            <p class="text-xs uppercase tracking-[.2em] text-earth font-black">Waste is also climate waste</p>
+            <h2 class="text-2xl sm:text-4xl font-black mt-2">Throwing away food also throws away what it took to produce it.</h2>
+            <p class="text-muted mt-3 max-w-3xl">Land, water, energy, labor, transport and refrigeration can all be embodied in food that is never eaten. UNEP estimates food loss and waste are responsible for 8–10% of global greenhouse-gas emissions.</p>
+            <div class="climate-number mt-6"><strong>8–10%</strong><span>of global greenhouse-gas emissions are associated with food loss and waste.</span></div>
+            <div class="rounded-2xl surface-flat p-4 mt-5"><p class="text-xs uppercase tracking-[.16em] text-earth font-black">What prevention changes</p><p class="font-bold mt-2">Plan around food you already have. Store it well. Use leftovers. Freeze or preserve surplus. Share edible excess. Compost unavoidable scraps after prevention.</p></div>
+            <a class="inline-block text-primary underline font-bold text-xs mt-5" href="https://www.unep.org/topics/food-systems/food-loss-and-waste" target="_blank" rel="noopener noreferrer">UNEP · Food loss and waste ↗</a>
+          </article>
+
+          <article class="surface rounded-[2rem] p-5 sm:p-8 mt-8 consequence-story">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">Science without exaggeration</p>
+            <h2 class="text-2xl sm:text-4xl font-black mt-2">What we know. What we're still learning.</h2>
+            <div class="grid md:grid-cols-2 gap-4 mt-6">
+              <div class="rounded-2xl primary-soft p-5"><p class="text-xs uppercase tracking-[.16em] text-primary font-black">We know</p><p class="text-sm font-bold mt-3 leading-relaxed">Plastic persists, fragments into microplastics, moves through ecosystems, and can harm wildlife through ingestion and entanglement.</p></div>
+              <div class="rounded-2xl surface-flat p-5"><p class="text-xs uppercase tracking-[.16em] text-earth font-black">We're still learning</p><p class="text-sm font-bold mt-3 leading-relaxed">The long-term health consequences of different human microplastic exposures, particle sizes, polymers and doses are still being studied. Zerra will not turn detection into a medical claim.</p></div>
+            </div>
+          </article>
+
+          <article id="take-action" class="turning-point rounded-[2rem] overflow-hidden mt-8 scroll-mt-24">
+            <div class="turning-point-inner">
+              <p class="text-xs uppercase tracking-[.2em] font-black">From impact to action</p>
+              <h2>This isn't inevitable.</h2>
+              <p>Zero waste is not about being perfect. It is about changing the order of decisions: prevent what you can, keep what already exists useful, and manage the remainder responsibly.</p>
+            </div>
+          </article>
+
+          <article class="surface rounded-[2rem] p-5 sm:p-8 mt-8 action-engine">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">Start upstream</p>
+            <h2 class="text-2xl sm:text-4xl font-black mt-2">Before something becomes waste, ask a better question.</h2>
+            <p class="text-muted mt-3 max-w-3xl">EPA's materials hierarchy puts source reduction and reuse ahead of recycling. Zerra turns that principle into everyday choices: use less, keep materials useful longer, then recover what remains.</p>
+            <div class="action-ladder mt-6">
+              <div><b>1</b><span><strong>REFUSE</strong><small>Do I need this at all?</small></span></div>
+              <div><b>2</b><span><strong>REDUCE</strong><small>Can I meet the need with less?</small></span></div>
+              <div><b>3</b><span><strong>REUSE</strong><small>Can I keep using what already exists?</small></span></div>
+              <div><b>4</b><span><strong>REPAIR</strong><small>Can its useful life be extended?</small></span></div>
+              <div><b>5</b><span><strong>REPURPOSE</strong><small>Can it serve another purpose?</small></span></div>
+              <div><b>6</b><span><strong>SHARE / BORROW</strong><small>Does everyone need to own one?</small></span></div>
+              <div><b>7</b><span><strong>COMPOST</strong><small>Can unavoidable biological material return to soil?</small></span></div>
+              <div><b>8</b><span><strong>RECYCLE</strong><small>Can the material actually be recovered locally?</small></span></div>
+              <div><b>9</b><span><strong>DISPOSE RESPONSIBLY</strong><small>Use the safest appropriate end-of-life option.</small></span></div>
+            </div>
+            <div class="flex flex-wrap gap-x-5 gap-y-2 mt-5 text-xs"><a class="text-primary underline font-bold" href="https://www.epa.gov/smm/sustainable-materials-management-non-hazardous-materials-and-waste-management-hierarchy" target="_blank" rel="noopener noreferrer">EPA · Materials & waste hierarchy ↗</a></div>
+          </article>
+
+          <article class="surface rounded-[2rem] p-5 sm:p-8 mt-8">
+            <p class="text-xs uppercase tracking-[.2em] text-earth font-black">Turn the numbers into choices</p>
+            <h2 class="text-2xl sm:text-4xl font-black mt-2">Start where the waste actually happens.</h2>
+            <div class="action-paths mt-6">
+              <div><span>🥕</span><h3>Food</h3><p>Plan around what you have → store it well → use leftovers → freeze or preserve surplus → share edible excess → compost unavoidable scraps.</p></div>
+              <div><span>👕</span><h3>Clothing</h3><p>Wear longer → care for it → mend or alter → swap or donate usable pieces → buy secondhand when something is truly needed.</p></div>
+              <div><span>📱</span><h3>Electronics</h3><p>Maintain → repair → upgrade when practical → reuse or resell → use proper e-waste collection when the device reaches end of life.</p></div>
+              <div><span>🥤</span><h3>Disposables</h3><p>Use what you already own → refuse unnecessary single-use items → refill and reuse → recycle correctly when prevention is no longer possible.</p></div>
+            </div>
+          </article>
+
+          <article class="surface rounded-[2rem] p-5 sm:p-8 mt-8 buy-check">
+            <div class="grid md:grid-cols-2 gap-6 items-start">
+              <div><p class="text-xs uppercase tracking-[.2em] text-primary font-black">Before you buy</p><h2 class="text-2xl sm:text-4xl font-black mt-2">You don't need to buy your way into zero waste.</h2><p class="text-muted mt-3">Replacing a safe, functional thing simply because a greener-looking version exists can create unnecessary waste. Start with what is already in your hands.</p></div>
+              <div class="buy-questions"><p>Do I already own something that works?</p><p>Can I repair what I have?</p><p>Can I borrow, share, rent, or find it used?</p><p>If I truly need it, can I choose durable and repairable?</p></div>
+            </div>
+          </article>
+
+          <article class="impact-action surface botanical rounded-[2rem] p-6 sm:p-10 mt-8 text-center action-finale">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">Start where you are</p>
+            <h2 class="text-3xl sm:text-5xl font-black mt-3">Use what you have. Keep it useful. Waste less.</h2>
+            <p class="text-muted max-w-2xl mx-auto mt-4">Your individual choices do not erase a global system, but they can reduce demand, extend material life, build practical skills, and make prevention normal. Zerra is here to help with the next decision.</p>
+            <div class="flex flex-wrap justify-center gap-3 mt-6"><button @click="go('explore')" class="btn btn-primary">Find what to do with an item</button><button @click="go('journey')" class="btn btn-soft">Practice zero waste</button><button @click="go('impact')" class="btn btn-soft">Track real actions</button></div>
+          </article>
+
+
+          <article class="surface rounded-[2rem] p-5 sm:p-8 mt-8">
+            <p class="text-xs uppercase tracking-[.2em] text-earth font-black">Why recycling comes later</p>
+            <h2 class="text-2xl sm:text-4xl font-black mt-2">Keep the resource useful before managing the waste.</h2>
+            <div class="zerra-hierarchy mt-6"><span>REFUSE</span><span>REDUCE</span><span>REUSE</span><span>REPAIR</span><span>REPURPOSE</span><span>SHARE / BORROW</span><span>COMPOST</span><span>RECYCLE</span><span>DISPOSE RESPONSIBLY</span></div>
+            <p class="text-muted mt-5">Recycling matters, but Zerra starts upstream. If an unnecessary product is never demanded, or an existing object stays useful longer, fewer new resources are required and there is less material to manage at the end.</p>
+          </article>
+
+          <article id="impact-sources" class="surface rounded-[2rem] p-5 sm:p-8 mt-8 scroll-mt-24 source-ledger">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">Evidence ledger</p>
+            <h2 class="text-2xl sm:text-4xl font-black mt-2">Check Zerra's work.</h2>
+            <p class="text-muted mt-3 max-w-3xl">The Impact story separates reported figures from Zerra's mathematical translations. Every headline figure names its year and links to the underlying institution. Photo credits link back to their source pages.</p>
+            <div class="source-rules mt-6">
+              <div><strong>Reported</strong><span>Figures presented by UNEP, OECD, UNITAR, EPA, or another cited source.</span></div>
+              <div><strong>Calculated</strong><span>Per-day, per-hour, minute, or second equivalents are labeled as mathematical translations, not live measurements.</span></div>
+              <div><strong>Dated</strong><span>Data years stay visible so an older dataset is never presented as if it describes this exact moment.</span></div>
+              <div><strong>Documentary</strong><span>Impact photography represents real places or conditions and carries a source/credit link. No AI disaster imagery is used as evidence.</span></div>
+            </div>
+            <div class="mt-6 grid sm:grid-cols-2 gap-3">
+              <a class="source-card" href="https://www.unep.org/resources/Global-Resource-Outlook-2024" target="_blank" rel="noopener noreferrer"><b>UNEP</b><span>Global Resources Outlook 2024</span></a>
+              <a class="source-card" href="https://www.oecd.org/en/publications/2022/02/global-plastics-outlook_a653d1c9.html" target="_blank" rel="noopener noreferrer"><b>OECD</b><span>Global Plastics Outlook</span></a>
+              <a class="source-card" href="https://www.unep.org/resources/publication/food-waste-index-report-2024" target="_blank" rel="noopener noreferrer"><b>UNEP</b><span>Food Waste Index Report 2024</span></a>
+              <a class="source-card" href="https://unitar.org/about/news-stories/press/global-e-waste-monitor-2024-electronic-waste-rising-five-times-faster-documented-e-waste-recycling" target="_blank" rel="noopener noreferrer"><b>UNITAR</b><span>Global E-waste Monitor 2024</span></a>
+            </div>
+          </article>
+
+          <article class="impact-action surface botanical rounded-[2rem] p-6 sm:p-9 mt-8 text-center">
+            <p class="text-xs uppercase tracking-[.2em] text-primary font-black">The point is not perfection</p>
+            <h2 class="text-3xl sm:text-5xl font-black mt-3">See it. Understand it. Change what you can.</h2>
+            <p class="text-muted max-w-2xl mx-auto mt-4">Use what you already have. Refuse unnecessary demand. Reduce. Reuse. Repair. Repurpose. Share. Compost. Recycle. Dispose responsibly.</p>
+            <div class="flex flex-wrap justify-center gap-3 mt-6"><button @click="go('explore')" class="btn btn-primary">Explore Zerra</button><button @click="go('journey')" class="btn btn-soft">Build the practice</button></div>
+          </article>
+        </section>
         <!-- IMPACT -->
         <section x-show="view === 'impact'" x-transition.opacity="">
           <div
@@ -1822,7 +2021,7 @@
     <nav aria-label="Mobile navigation"
       class="zerra-bottom-nav lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-theme nav-safe"
       style="background:var(--header);backdrop-filter:blur(16px)">
-      <div class="grid grid-cols-5 px-1">
+      <div class="zerra-bottom-nav-grid grid grid-cols-6 px-1">
         <template :key="item.id" x-for="item in primaryNav">
           <button :class="navActive(item.id) ? 'text-primary' : 'text-muted'"
             @click="go(item.id)"
