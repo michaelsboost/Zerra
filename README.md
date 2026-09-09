@@ -64,6 +64,29 @@ making practical improvements over time.
 
 ------------------------------------------------------------------------
 
+## ✨ What's New
+
+### v1.2.0
+
+Zerra v1.2.0 greatly expands the practical guidance available throughout the app while making the experience more reliable, searchable, accessible, and useful offline.
+
+- Expanded the Swaps knowledge base to **822 searchable situations** and **3,207 recommendations** across household essentials, food and food waste, clothing and repair, home and garden, self-reliance, transportation, work, school, travel, and everyday life.
+- Strengthened Zerra's **use-what-you-have-first** hierarchy, prioritizing refusal and reduction, reuse and repurposing, repair and maintenance, sharing and borrowing, secondhand options, and new purchases only when justified.
+- Improved multiword search, recommendation ordering, filters, **No Purchase** guidance, navigation state restoration, and long-term local persistence.
+- Expanded food-waste prevention, preservation, composting, repair and longevity, gardening, practical self-reliance, and low-consumption guidance.
+- Added stronger safety-aware guidance for food safety, hygiene, accessibility, children, animals, batteries and electrical work, legal requirements, and manufacturer instructions.
+- Added Zerra's native filled-leaf ripple loading experience with real startup progress, dark-mode support, and reduced-motion support.
+- Improved mobile accessibility, touch targets, offline/PWA behavior, cache updates, and install reliability.
+- Added automated functional, UI/accessibility, PWA/offline, package, and build checks to help keep future releases stable.
+
+### v1.1.0
+
+- Added the **Why** experience with sourced impact data and documentary photography.
+- Added **Follow the Waste** and broader planetary-consequence guidance.
+- Connected environmental impact information directly to practical zero-waste actions users can take.
+
+For full technical release history, see [CHANGELOG.md](CHANGELOG.md).
+
 ## 🌱 Zerra Explained Simply
 
 Imagine you are holding an everyday item and wondering what the most
@@ -563,12 +586,3 @@ See: [LICENSE](LICENSE)
 
 Michael Schwartz\
 https://michaelsboost.com
-
-
-### Impact photo performance
-Impact documentary photos request smaller Commons thumbnails, lazy-load below the fold, and are runtime-cached by the service worker after a successful view so repeat/offline visits are more resilient. The home hero remains a local, eager-loaded app-shell asset.
-
-
-## Impact release
-
-Version 1.1.0 adds Zerra’s new **Why** experience: sourced impact data, real documentary photography, Follow the Waste, planetary consequences, and a direct transition from evidence to practical zero-waste action.

@@ -683,45 +683,6 @@ textarea.input { resize: vertical; }
   }
 }
 
-/* ---------- Instant boot shell ----------
-   Visible before Alpine parses the app so first paint is never blank. */
-.zerra-boot-shell {
-  min-height: 100dvh;
-  padding: 1rem 1rem 6rem;
-  background: var(--bg, #f6f1e7);
-  color: var(--text, #26362c);
-}
-.zerra-boot-brand {
-  max-width: 78rem;
-  margin: 0 auto 1rem;
-  display: flex;
-  align-items: center;
-  gap: .65rem;
-  font-family: Georgia, serif;
-  font-size: 1.55rem;
-}
-.zerra-boot-brand img { width: 2.1rem; height: 2.1rem; }
-.zerra-boot-card {
-  max-width: 78rem;
-  margin: 0 auto;
-  overflow: hidden;
-  border: 1px solid rgba(44, 76, 58, .14);
-  border-radius: 1.5rem;
-  background: #fffdf8;
-  box-shadow: 0 10px 30px rgba(35, 48, 39, .08);
-}
-.zerra-boot-copy { padding: 1.6rem 1.5rem 1.35rem; }
-.zerra-boot-copy span { color: #276749; font-size: .72rem; font-weight: 800; letter-spacing: .13em; }
-.zerra-boot-copy h1 { margin: .45rem 0 .7rem; color: #245c43; font: 700 clamp(2rem, 8vw, 3.5rem)/1.02 Georgia, serif; letter-spacing: -.025em; }
-.zerra-boot-copy p { margin: 0; color: #667269; font-size: 1rem; }
-.zerra-boot-image { display: block; width: 100%; height: min(43vh, 24rem); object-fit: cover; object-position: 50% 47%; background: #dfe7df; }
-@media (min-width: 768px) {
-  .zerra-boot-shell { padding: 2rem; }
-  .zerra-boot-card { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 32rem; }
-  .zerra-boot-copy { padding: 4rem 2.5rem; align-self: center; }
-  .zerra-boot-image { height: 100%; min-height: 32rem; }
-}
-
 /* ---------- Impact milestone 2: Follow the Waste ---------- */
 .waste-chain{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.waste-chain span{padding:.65rem .85rem;border:1px solid var(--border);border-radius:999px;background:var(--surface-flat);font-size:.78rem;font-weight:900}.waste-chain b{color:var(--primary)}
 .waste-destination{padding:1rem;border:1px solid var(--border);border-radius:1.25rem;background:var(--surface-flat)}.waste-destination h3{font-weight:900;margin-top:.45rem}.waste-destination p{font-size:.8rem;line-height:1.55;color:var(--muted);margin-top:.35rem}
@@ -795,3 +756,54 @@ textarea.input { resize: vertical; }
 .source-card b { font-size:.75rem; color:var(--primary); }
 .source-card span { font-size:.78rem; color:var(--muted); }
 @media(max-width:640px){ .source-rules{grid-template-columns:1fr}.impact-jump{margin-inline:-.25rem} }
+
+/* ---------- Phase 7 Pass 12 fallback V7 ----------
+   User-authored filled leaf + large soft V1-style ripple field. */
+.zerra-boot-loader {
+  position:relative; width:clamp(8.5rem,34vw,10.5rem); aspect-ratio:1; display:grid; place-items:center;
+}
+.zerra-boot-logo {
+  position:relative; z-index:3; width:55%; overflow:visible; filter:none; animation:zerra-logo-breathe 2.6s ease-in-out infinite;
+}
+.zerra-logo-leaf { fill:#7ba078 !important; stroke:none !important; }
+.zerra-logo-vein { fill:#f6f1e7 !important; stroke:none !important; }
+.zerra-boot-ripple {
+  position:absolute; z-index:1; left:50%; top:50%; width:112%; aspect-ratio:1; border-radius:50%;
+  border:1.5px solid rgba(123,160,120,.30); background:rgba(123,160,120,.025);
+  transform:translate(-50%,-50%) scale(.68); opacity:0; pointer-events:none;
+  animation:zerra-boot-ripple-wave 2.7s ease-out infinite;
+}
+.zerra-boot-ripple-2 { animation-delay:.9s; }
+.zerra-boot-ripple-3 { animation-delay:1.8s; }
+@keyframes zerra-boot-ripple-wave {
+  0% { transform:translate(-50%,-50%) scale(.68); opacity:0; }
+  14% { opacity:.62; }
+  72% { opacity:.20; }
+  100% { transform:translate(-50%,-50%) scale(1.28); opacity:0; }
+}
+@keyframes zerra-logo-breathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.018)} }
+@media (prefers-reduced-motion:reduce) {
+  .zerra-boot-logo { animation:none !important; }
+  .zerra-boot-ripple { animation:none !important; opacity:.22; transform:translate(-50%,-50%) scale(1.02); }
+  .zerra-boot-ripple-2,.zerra-boot-ripple-3 { display:none; }
+}
+html[data-theme="dark"] .zerra-logo-leaf { fill:#8fb58c !important; }
+html[data-theme="dark"] .zerra-logo-vein { fill:#101b15 !important; }
+html[data-theme="dark"] .zerra-boot-ripple { border-color:rgba(143,181,140,.30); background:rgba(143,181,140,.025); }
+
+/* Phase 7 Pass 16: mobile accessibility target sizing */
+@media (max-width: 639px) { .zerra-header-action { width: 2.75rem !important; height: 2.75rem !important; flex-basis: 2.75rem !important; } }
+
+/* Phase 7 Pass 21: approved V7 boot-shell layout (release regression fix). */
+.zerra-boot-shell { position:fixed; inset:0; z-index:9999; min-height:100dvh; display:grid; place-content:center; justify-items:center; gap:.65rem; padding:2rem; overflow:hidden; background:#f6f1e7; color:#245c43; text-align:center; }
+.zerra-boot-wordmark { margin-top:.05rem; font:700 clamp(2rem,8vw,2.75rem)/1 Georgia,serif; letter-spacing:-.035em; }
+.zerra-boot-tagline { margin:.15rem 0 0; max-width:24rem; color:#52685a; font-size:clamp(.88rem,3.2vw,1rem); }
+html[data-theme="dark"] .zerra-boot-shell { background:#101b15; color:#b9dfc5; }
+html[data-theme="dark"] .zerra-boot-tagline { color:#9bb0a2; }
+
+/* Phase 7 Pass 22: truthful boot progress indicator. */
+.zerra-boot-progress { margin-top:-.05rem; color:#6d8874; font:700 .82rem/1.1 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; letter-spacing:.04em; font-variant-numeric:tabular-nums; }
+.zerra-boot-shell { transition:opacity .2s ease; }
+.zerra-boot-shell.zerra-boot-complete { opacity:0; pointer-events:none; }
+html[data-theme="dark"] .zerra-boot-progress { color:#91aa98; }
+@media (prefers-reduced-motion:reduce) { .zerra-boot-shell { transition:none; } }

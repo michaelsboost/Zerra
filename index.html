@@ -30,18 +30,44 @@
   <body>
 
 <a class="skip-link" href="#main-content">Skip to main content</a>
-<div id="zerra-boot-shell" class="zerra-boot-shell" role="status" aria-live="polite">
-  <div class="zerra-boot-brand"><img src="imgs/logo.svg" alt="" width="34" height="34"><strong>Zerra</strong></div>
-  <div class="zerra-boot-card">
-    <div class="zerra-boot-copy">
-      <span>ZERO WASTE, WITHOUT THE WAIT</span>
-      <h1>Rethink Waste.<br>Reconnect with Earth.</h1>
-      <p>Use what you already have first.</p>
-    </div>
-    <img class="zerra-boot-image" src="imgs/zerra-home-hero.jpg" alt="Saved seeds, a watering can, and garden plants on a sunlit wooden table" width="1536" height="1024" fetchpriority="high">
+<div id="zerra-boot-shell" class="zerra-boot-shell" role="status" aria-live="polite" aria-label="Zerra is loading">
+  <div class="zerra-boot-loader" aria-hidden="true">
+    <span class="zerra-boot-ripple zerra-boot-ripple-1"></span>
+    <span class="zerra-boot-ripple zerra-boot-ripple-2"></span>
+    <span class="zerra-boot-ripple zerra-boot-ripple-3"></span>
+<svg class="zerra-boot-logo" viewBox="0 0 165 191" focusable="false" aria-hidden="true">
+      <path class="zerra-logo-leaf" d="m142.48 4.5c-7.41 1.29-20.44 3.68-28.95 5.31-8.51 1.63-20.86 4.53-27.45 6.44-6.59 1.91-16.93 5.8-22.98 8.64-6.05 2.84-14.55 7.61-18.9 10.6-4.35 2.98-10.89 8.6-14.53 12.47-3.63 3.87-8.41 9.71-10.6 12.98-2.19 3.26-5.66 9.99-7.69 14.94-2.04 4.95-4.54 13.28-5.55 18.51-1.6 8.33-1.71 11.15-0.81 22.55 0.69 8.72 1.84 15.53 3.48 20.57 1.35 4.14 3.02 8.88 3.71 10.54 1.13 2.69 0.98 3.67-1.39 9.02-1.46 3.3-4.27 10.27-6.24 15.5-1.97 5.23-3.6 10.41-3.63 11.51-0.03 1.1 0.75 2.79 1.72 3.74 0.97 0.96 3.12 1.76 4.76 1.79 1.65 0.02 4.01-0.63 5.24-1.45 1.3-0.87 2.96-3.74 3.91-6.76 0.92-2.89 3.23-9.08 5.16-13.75 1.92-4.68 3.89-8.96 4.38-9.51 0.59-0.65 3.03-0.35 7.13 0.89 3.92 1.19 10.86 2.1 18.7 2.46 10.03 0.46 14.31 0.19 21.94-1.38 5.22-1.06 13.31-3.44 17.98-5.28 4.67-1.84 12.32-5.87 17-8.97 4.68-3.09 11.88-8.96 16.02-13.04 4.13-4.07 9.98-10.96 12.99-15.3 3.02-4.35 6.93-11.05 8.7-14.9 1.77-3.85 4.66-11.05 6.41-16.01 1.76-4.95 4.29-14.41 5.64-21.02 1.35-6.61 2.94-17.2 3.55-23.54 0.61-6.33 1.14-17.27 1.17-24.3 0.06-10.02-0.25-13.1-1.42-14.29-0.82-0.83-2.5-1.46-3.73-1.4-1.24 0.06-8.31 1.16-15.72 2.44z"/>
+      <path class="zerra-logo-vein" d="m97.83 59.1c-2.75 1.28-8.82 4.7-13.5 7.6-4.68 2.9-12.11 8.07-16.51 11.48-4.41 3.42-10.91 9.07-14.45 12.57-3.54 3.5-9.12 9.95-12.4 14.34-3.28 4.4-7.72 10.92-9.86 14.49-2.15 3.57-4.15 8.18-4.43 10.25-0.49 3.51-0.26 3.92 3.46 6.28 2.18 1.39 4.31 2.37 4.72 2.17 0.41-0.2 3.31-4.81 6.43-10.24 3.13-5.44 8.36-13.48 11.62-17.87 3.27-4.4 8.54-10.91 11.73-14.48 3.18-3.57 9.47-9.75 13.97-13.73 4.49-3.99 12.59-10.26 18-13.94 7.58-5.18 9.75-7.16 9.51-8.7-0.16-1.09-0.97-2.12-1.8-2.26-0.82-0.15-3.74 0.77-6.49 2.04z"/>
+    </svg>
   </div>
+  <div id="zerra-boot-progress" class="zerra-boot-progress" aria-hidden="true">12%</div>
+  <div class="zerra-boot-wordmark">Zerra</div>
+  <p class="zerra-boot-tagline">Rethink Waste. Reconnect with Earth.</p>
 </div>
-<div x-data="zerraApp()" x-init="init(); document.getElementById('zerra-boot-shell')?.remove()" @keydown.escape.window="closeModals()" x-cloak>
+<script>
+  // Boot progress follows real startup milestones; 100% is only reached after init() returns.
+  (() => {
+    const progress = document.getElementById('zerra-boot-progress');
+    let value = 12;
+    window.zerraBootProgress = nextValue => {
+      value = Math.max(value, Math.min(100, Math.round(nextValue)));
+      if (progress) progress.textContent = `${value}%`;
+    };
+    window.zerraBootProgress(25);
+    document.addEventListener('DOMContentLoaded', () => window.zerraBootProgress(45), { once: true });
+    window.addEventListener('load', () => window.zerraBootProgress(60), { once: true });
+    window.zerraBootComplete = () => {
+      window.zerraBootProgress(100);
+      const shell = document.getElementById('zerra-boot-shell');
+      if (!shell) return;
+      shell.classList.add('zerra-boot-complete');
+      window.setTimeout(() => shell.remove(), 220);
+    };
+    // Safety fallback for unexpected startup failures.
+    window.setTimeout(() => window.zerraBootComplete?.(), 4000);
+  })();
+</script>
+<div x-data="zerraApp()" x-init="window.zerraBootProgress?.(72); init(); window.zerraBootComplete?.()" @keydown.escape.window="closeModals()" x-cloak>
   <svg aria-hidden="true" class="hidden">
     <symbol id="i-home" viewbox="0 0 24 24">
       <path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"
