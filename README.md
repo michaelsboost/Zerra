@@ -1,480 +1,506 @@
 # ZERRA
 
-*A practical guide to zero-waste, lower-consumption, more
-Earth-connected living --- built around using what you already have
-first.*
+**There Is No Away.**
+
+*An evidence-led environmental action hub for understanding waste,
+reconnecting with responsibility, taking practical action, and finding
+trusted resources for lower-waste and more sustainable living.*
 
 ![About
 Zerra](https://raw.githubusercontent.com/michaelsboost/Zerra/main/imgs/promo.png)
 
-
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://michaelsboost.com/Zerra/)
-[![MIT
-License](https://img.shields.io/github/license/michaelsboost/Zerra)](LICENSE)
-[![GitHub
-Stars](https://img.shields.io/github/stars/michaelsboost/Zerra)](https://github.com/michaelsboost/Zerra/stargazers)
-[![GitHub
-Issues](https://img.shields.io/github/issues/michaelsboost/Zerra)](https://github.com/michaelsboost/Zerra/issues)
+[![Version](https://img.shields.io/badge/version-2.0.0-ff2b75)](https://github.com/michaelsboost/Zerra)
+[![MIT License](https://img.shields.io/github/license/michaelsboost/Zerra)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/michaelsboost/Zerra)](https://github.com/michaelsboost/Zerra/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/michaelsboost/Zerra)](https://github.com/michaelsboost/Zerra/issues)
 
 ------------------------------------------------------------------------
 
 ## 🌍 About Zerra
 
-Zerra is a free, open-source guide to reducing waste, consuming less,
-reusing more, building practical skills, and reconnecting everyday life
-with the Earth.
+Zerra is a free, open-source environmental education and action app
+built around a simple reality:
 
-The experience is organized around the LIFE Framework: **Longevity,
-Integrity, Flourishing, and Equilibrium**. It connects practical action
-with relationships among people, animals, communities, belongings,
-food, soil, and Mother Earth.
+> **You threw it away. It went somewhere.**
 
-A lot of sustainability advice begins with buying a greener replacement.
-Zerra begins somewhere else:
+The moment something leaves your hands is not the end of its material
+story. Waste moves through landfills, recycling systems, waterways,
+communities, ecosystems, recovery systems, and other destinations. Zerra
+helps make those connections visible, understandable, verifiable, and
+actionable.
 
-**Use what you already have first.**
+Version 2.0 is a top-to-bottom re-engineering of Zerra. Rather than
+functioning primarily as a searchable catalog of items and swaps, Zerra
+is now organized as an **educational and action hub**.
 
-Before replacing something, Zerra encourages users to ask whether they
-can refuse it, reduce their use of it, keep using it, repair it,
-repurpose it, share or borrow it, compost it, recycle it responsibly, or
-only then dispose of it.
+Its purpose is to help people:
 
-The app brings together practical guidance for:
+-   **see** consequences that are easy to overlook
+-   **understand** how waste and material systems actually work
+-   **verify** claims through evidence and original sources
+-   **reconnect** environmental questions with stewardship, reciprocity,
+    and responsibility
+-   **act** through practical lower-waste choices
+-   **go deeper** through trusted external resources, organizations,
+    tools, books, films, and specialized guides
 
--   reducing household waste
--   lowering unnecessary consumption
--   reusing and repurposing what you already own
--   repairing and maintaining belongings
--   borrowing and sharing instead of buying
--   finding secondhand options
--   exploring DIY and traditional alternatives
--   reducing plastic use
--   composting
--   recycling responsibly
--   disposing of difficult items more responsibly
--   gardening and growing food
--   preserving food
--   building practical household skills
--   becoming more self-reliant
--   tracking gradual progress
-
-Zerra is not about achieving a perfectly zero-waste life. It is about
-making better use of what is available, learning useful skills, and
-making practical improvements over time.
+Zerra is comprehensive in **direction**, not exhaustive in instruction.
+It is designed to give someone a strong sense of where to go next
+without pretending that one app can contain all environmental knowledge.
 
 ------------------------------------------------------------------------
 
-## ✨ What's New
+## ✨ What's New in v2.0.0
 
-### v1.2.0
+Zerra 2.0 is not a routine feature update. The application has been
+re-engineered from top to bottom around a new information architecture,
+visual system, evidence standard, and user journey.
 
-Zerra v1.2.0 greatly expands the practical guidance available throughout the app while making the experience more reliable, searchable, accessible, and useful offline.
+### New application structure
 
-- Expanded the Swaps knowledge base to **822 searchable situations** and **3,207 recommendations** across household essentials, food and food waste, clothing and repair, home and garden, self-reliance, transportation, work, school, travel, and everyday life.
-- Strengthened Zerra's **use-what-you-have-first** hierarchy, prioritizing refusal and reduction, reuse and repurposing, repair and maintenance, sharing and borrowing, secondhand options, and new purchases only when justified.
-- Improved multiword search, recommendation ordering, filters, **No Purchase** guidance, navigation state restoration, and long-term local persistence.
-- Expanded food-waste prevention, preservation, composting, repair and longevity, gardening, practical self-reliance, and low-consumption guidance.
-- Added stronger safety-aware guidance for food safety, hygiene, accessibility, children, animals, batteries and electrical work, legal requirements, and manufacturer instructions.
-- Added Zerra's native filled-leaf ripple loading experience with real startup progress, dark-mode support, and reduced-motion support.
-- Improved mobile accessibility, touch targets, offline/PWA behavior, cache updates, and install reliability.
-- Added automated functional, UI/accessibility, PWA/offline, package, and build checks to help keep future releases stable.
+Zerra is now organized around nine focused destinations:
 
-### v1.1.0
+-   **Home** --- consequence-first introduction, evidence, Essential
+    Viewing, common objections, and first actions
+-   **Why Care?** --- connects waste to money, resources, communities,
+    infrastructure, quality of life, and the future
+-   **Learn** --- explains what happens to materials and why modern
+    waste systems work the way they do
+-   **Reconnect** --- explores stewardship, reciprocity, responsibility,
+    ecological relationships, and carefully sourced cultural
+    perspectives
+-   **Act** --- turns understanding into practical action through
+    prevention, reuse, repair, sharing, recovery, composting, growing,
+    returning, conserving, and responsible recycling
+-   **Evidence** --- provides searchable claims, context, data, reports,
+    methodology, and original sources
+-   **Resources** --- acts as a curated gateway to documentaries,
+    organizations, books, tools, guides, software resources, systems
+    thinking, and deeper learning
+-   **Stores** --- helps users find secondhand, refurbished,
+    reuse-oriented, and community resources instead of defaulting to new
+    consumption
+-   **About** --- explains Zerra's purpose, philosophy, evidence
+    approach, and relationship to action
 
-- Added the **Why** experience with sourced impact data and documentary photography.
-- Added **Follow the Waste** and broader planetary-consequence guidance.
-- Connected environmental impact information directly to practical zero-waste actions users can take.
+### A new user journey
 
-For full technical release history, see [CHANGELOG.md](CHANGELOG.md).
-
-## 🌱 Zerra Explained Simply
-
-Imagine you are holding an everyday item and wondering what the most
-sustainable thing to do with it is.
-
-Maybe it is:
-
--   a toothbrush
--   food scraps
--   an old shirt
--   a broken appliance
--   cleaning supplies
--   batteries
--   furniture
--   packaging
--   a kitchen tool
--   something you are thinking about buying
-
-Normally, you might search several different websites to answer
-questions such as:
-
--   Do I actually need to replace this?
--   Can I use what I already have?
--   Can it be repaired?
--   Can it be reused or repurposed?
--   Could I borrow or share instead?
--   Is there a DIY option?
--   Is there a traditional low-tech solution?
--   Can I find it secondhand?
--   Which option creates the least waste?
--   Which option lasts the longest?
--   Is there a plastic-free option?
--   Can it be composted?
--   Can it be recycled?
--   How should it be disposed of if nothing else works?
-
-Zerra is intended to connect those questions in one place.
-
-It is not simply a list of eco-friendly products. In many cases, the
-best alternative may be **buying nothing at all**.
-
-------------------------------------------------------------------------
-
-## ♻️ The Zerra Hierarchy
-
-Zerra organizes sustainable decisions around this general order:
+The experience is designed around:
 
 ``` text
-Refuse
+SEE IT
   ↓
-Reduce
+UNDERSTAND IT
   ↓
-Reuse
+VERIFY IT
   ↓
-Repair
+RECONNECT
   ↓
-Repurpose
+ACT
   ↓
-Share / Borrow
-  ↓
-Compost
-  ↓
-Recycle
-  ↓
-Dispose Responsibly
+GO DEEPER
 ```
 
-The hierarchy is a decision guide rather than an inflexible rule.
+### Evidence before assertion
 
-Different materials and situations require different solutions, but the
-central idea remains:
+Zerra 2.0 treats sourcing as part of the experience rather than an
+afterthought.
 
-**prevent waste before trying to manage waste.**
+Its general evidence model is:
 
-------------------------------------------------------------------------
+``` text
+CLAIM
+  ↓
+CONTEXT
+  ↓
+EVIDENCE
+  ↓
+ORIGINAL SOURCE
+  ↓
+MEANING
+  ↓
+RESPONSIBILITY
+  ↓
+ACTION
+```
 
-## 🔍 Items & Alternatives
+Where practical, factual claims point users toward primary or
+authoritative sources so they can inspect the evidence themselves.
 
-The Items section helps users search everyday objects, materials, and
-household needs and explore different ways of approaching them.
+### Consequence-first Home experience
 
-Instead of presenting one supposedly perfect replacement, Zerra can show
-several possibilities.
+The Home page has been rebuilt around the message:
 
-Depending on the item, alternatives may include:
+> **THE BIN IS NOT THE END.**\
+> **You threw it away. It went somewhere.**
 
--   use what you already have
--   go without
--   use less
--   repair
--   repurpose
--   reusable options
--   durable options
--   plastic-free options
--   DIY alternatives
--   secondhand alternatives
--   traditional practices
--   shared or borrowed options
--   low-cost alternatives
--   low-waste alternatives
+The page combines real-world evidence, documentary photography, live
+waste context, Essential Viewing, common objections, and practical next
+steps.
 
-This is intentionally broader than a conventional product-recommendation
-system.
+### Essential Viewing
 
-A toothbrush, for example, does not have to lead to a single bamboo
-toothbrush recommendation. A useful guide can include multiple
-approaches and traditions so the user can decide what is practical for
-their circumstances.
+Zerra includes a dedicated video-only Essential Viewing experience with
+films and reporting that help users understand waste, plastics,
+consumption, recycling, and circular systems.
 
-------------------------------------------------------------------------
+### Common objections, answered with evidence
 
-## 🎛️ Search, Filters & Priorities
+The **What's Your Excuse?** experience addresses common objections such
+as:
 
-Users can search directly for an item or browse through areas and
-categories.
+-   "But I recycle."
+-   "One person can't make a difference."
+-   "Zero waste is too expensive."
+-   "Companies are the real problem."
+-   "Zero waste is impossible."
 
-Quick filters can surface items with alternatives matching preferences
+Each response connects a quick explanation with evidence, sources,
+deeper context, practical action, and related viewing.
+
+### Local resource discovery
+
+The Act and Stores experiences help users look beyond disposal and new
+purchases by finding useful resources near them, including categories
 such as:
 
--   **No Purchase**
--   **Lowest Cost**
--   **Lowest Waste**
--   **Plastic-Free**
--   **Longest Lifespan**
--   **Most Repairable**
--   **DIY**
--   **Secondhand**
--   **Traditional**
-
-The priority system can also help users focus on goals such as:
-
--   saving money
--   reducing waste
--   avoiding plastic
--   choosing long-lasting options
--   increasing self-reliance
--   avoiding new purchases
--   choosing repairable options
--   reducing maintenance
-
-Filters can be used even when nothing has been entered into the search
-field.
-
-------------------------------------------------------------------------
-
-## 📚 Guides
-
-Zerra includes practical guides for people who want to improve how their
-household works rather than simply replace individual products.
-
-Guide topics can cover areas such as:
-
--   waste reduction
--   reuse
+-   thrift and secondhand
+-   libraries
 -   repair
--   repurposing
--   composting
 -   recycling
--   responsible disposal
--   gardening
--   growing food
--   food preservation
--   household efficiency
--   sharing and borrowing
--   practical self-reliance
--   lower-consumption living
+-   scrap and material recovery
+-   food pantries
+-   tool libraries
+-   refill shops
+-   makerspaces
 
-The Guides section is intended to be useful both to someone making one
-small change and someone gradually redesigning the way their household
-operates.
+Local availability varies, so Zerra provides discovery tools rather than
+assuming the same services exist everywhere.
 
-------------------------------------------------------------------------
+### Systems & Futures
 
-## 🌿 Grow, Preserve & Reconnect
+The Resources section includes a clearly identified **Systems &
+Futures** area for exploring documented research, proposals, and
+critiques concerning production, consumption, circularity, resource
+allocation, and alternative socioeconomic frameworks.
 
-Reducing waste is only one part of Zerra.
+Inclusion is not an endorsement of a political or economic model. The
+purpose is to give users credible starting points for investigating
+different approaches and their assumptions.
 
-The broader goal is to help people build a more resilient and
-Earth-connected way of living.
+### Go Vegan companion project
 
-That can include:
+Zerra and [Go Vegan](https://michaelsboost.com/govegan/) are separate
+open-source projects with complementary purposes.
 
--   growing herbs, vegetables, and food
--   learning basic gardening skills
--   composting organic material
--   preserving seasonal food
--   reducing food waste
--   learning repair and maintenance skills
--   using durable tools
--   sharing resources with other people
--   spending less through reuse and self-reliance
--   understanding where materials go when we are finished with them
-
-Zerra treats practical skills as part of sustainability.
+Zerra focuses on waste, ecological responsibility, material systems, and
+practical environmental action. Go Vegan focuses specifically on animal
+exploitation and the consequences of treating animals as products,
+including environmental dimensions of food and production systems.
 
 ------------------------------------------------------------------------
 
-## 🧭 Journey & Progress
+## ♻️ Zero Waste as a Direction
 
-Large lifestyle changes can become overwhelming when everything feels
-urgent at once.
+Zerra does not present zero waste as literal perfection or a purity
+test.
 
-Zerra includes progress and journey features so users can work gradually
-instead.
+The goal is to move decisions upstream whenever possible: prevent waste
+before trying to manage it after it exists.
 
-Progress is stored locally in the browser.
-
-The goal is not to create another system for judging whether someone is
-"sustainable enough." It is to make improvement visible and encourage
-continued learning.
-
-**Progress, not perfection.**
-
-------------------------------------------------------------------------
-
-## 🌟 Features
-
--   ✅ Items & Alternatives explorer
--   ✅ Large alternative database
--   ✅ Area and category browsing
--   ✅ Unified item search
--   ✅ No-purchase alternatives
--   ✅ Lowest-cost filtering
--   ✅ Lowest-waste filtering
--   ✅ Plastic-free filtering
--   ✅ Long-lifespan filtering
--   ✅ Repairability filtering
--   ✅ DIY alternatives
--   ✅ Secondhand alternatives
--   ✅ Traditional practices
--   ✅ Priority-based discovery
--   ✅ Practical Guides
--   ✅ Repair and reuse guidance
--   ✅ Composting guidance
--   ✅ Recycling guidance
--   ✅ Responsible-disposal guidance
--   ✅ Gardening and food-growing guidance
--   ✅ Food-preservation guidance
--   ✅ Journey and progress tracking
--   ✅ Responsive desktop and mobile design
--   ✅ Mobile navigation
--   ✅ LocalStorage persistence
--   ✅ Light and dark themes
--   ✅ No account required
--   ✅ No backend required
--   ✅ Open source
--   ✅ Direct entry into Today with optional personalization
--   ✅ LIFE Framework and Reconnect learning modules
--   ✅ Food, seed-saving, compost, and restoration guidance
--   ✅ Grouped search across Zerra's connected knowledge
--   ✅ Contextual Go Vegan companion guidance
--   ✅ Installable, offline-capable PWA
--   ✅ Self-contained kodeWeave project export with base64-embedded images
-
-------------------------------------------------------------------------
-
-## 🔗 Connected Information Model
-
-Zerra organizes information as a connected hierarchy rather than a flat
-list of green products.
+A practical direction used throughout Zerra is:
 
 ``` text
-Areas
-  └── Categories
-        └── Items
-              ├── No-purchase options
-              ├── Low-cost options
-              ├── Low-waste options
-              ├── Plastic-free options
-              ├── Long-life options
-              ├── Repairable options
-              ├── DIY options
-              ├── Secondhand options
-              └── Traditional practices
-
-Guides
-  ├── Reduce
-  ├── Reuse
-  ├── Repair
-  ├── Repurpose
-  ├── Share / Borrow
-  ├── Compost
-  ├── Recycle
-  ├── Dispose Responsibly
-  ├── Grow
-  └── Preserve
+REFUSE
+REDUCE
+REUSE
+REPAIR
+SHARE
+REPURPOSE
+RECOVER
+COMPOST
+GROW
+RETURN
+CONSERVE
+RECYCLE CORRECTLY
 ```
 
-This structure allows someone to begin with a simple object and move
-outward into broader habits and skills.
+For an item already in your hands, Zerra also encourages asking:
 
-### Companion project: Go Vegan
+``` text
+KEEP
+  ↓
+REPAIR
+  ↓
+SELL
+  ↓
+GIVE
+  ↓
+SHARE
+  ↓
+REPURPOSE
+  ↓
+RECOVER
+  ↓
+COMPOST
+  ↓
+RECYCLE
+  ↓
+SPECIAL HANDLING
+  ↓
+DISPOSE LAST
+```
 
-Zerra and [Go Vegan](https://michaelsboost.com/govegan/) are separate,
-independent apps with complementary purposes. Zerra focuses on
-consumption, care, material life cycles, seeds, soil, return, and
-restoration. When a question centers animals, animal-derived foods, or
-animal-derived materials, contextual links point to Go Vegan for the
-deeper animal relationship, plant-based alternatives, recipes, and
-nutrition guidance. The apps do not share browser storage or require
-one another to function.
+These are decision frameworks, not rigid universal rules. Materials,
+safety requirements, infrastructure, local regulations, accessibility,
+and individual circumstances can change the appropriate action.
 
 ------------------------------------------------------------------------
 
-## 🧠 Core Principles
+## 🌱 Stewardship, Reciprocity & Responsibility
 
-### Use what you already have first
+Zerra connects environmental action with three related questions:
 
-Buying a sustainable replacement for something that still works can
-create unnecessary consumption of its own.
+### Stewardship
 
-### Progress, not perfection
+**How do we care for what sustains us?**
 
-Real households have budgets, time limits, rental restrictions,
-accessibility needs, different climates, and different local services.
+### Reciprocity
 
-### Present options, not commandments
+**What do we give back in return for what we receive?**
 
-There is rarely one universal replacement that works for everyone.
+### Responsibility
 
-### Skills matter
+**What obligations follow from our actions and their consequences?**
 
-Repairing, maintaining, growing, preserving, sharing, and making things
-can reduce dependence on disposable consumption.
+Responsibility is not framed as household behavior alone. Individuals,
+communities, institutions, producers, governments, and larger systems
+operate at different scales and can carry different forms of
+responsibility.
 
-### Recycling comes later
+The Reconnect section also includes carefully sourced cultural and
+Indigenous perspectives. Zerra avoids presenting hundreds of distinct
+peoples and traditions as one universal worldview; specific teachings
+should be understood in their own cultural and historical context.
 
-Recycling can be useful, but Zerra encourages users to consider
-preventing, reducing, reusing, and repairing waste before relying on
-recycling.
+------------------------------------------------------------------------
+
+## 🔬 Evidence & Sources
+
+Zerra is designed so users do not have to accept its factual claims on
+trust.
+
+The Evidence section provides searchable records connecting claims to
+context and source material. Sources used throughout the project include
+public agencies, international organizations, Tribal and Indigenous
+sources where appropriate, research institutions, and other original or
+authoritative references.
+
+Examples include:
+
+-   United Nations Environment Programme
+-   U.S. Environmental Protection Agency
+-   U.S. Department of Energy
+-   U.S. Department of Agriculture
+-   Tribal Nation and Indigenous sources where culturally specific
+    material is discussed
+
+Evidence and definitions can change as new data becomes available.
+Contributions that correct outdated claims or improve sourcing are
+welcome.
+
+------------------------------------------------------------------------
+
+## 📚 Resources: A Gateway, Not a Pile of Links
+
+Zerra's Resources section is designed to help users continue beyond the
+app.
+
+Resource categories can include:
+
+-   documentaries and educational films
+-   books
+-   organizations
+-   reports and guides
+-   repair resources
+-   composting and recycling resources
+-   reuse and sharing resources
+-   local-resource guidance
+-   secondhand and lower-waste shopping resources
+-   digital and open-source alternatives
+-   community resources
+-   systems and futures
+-   the Go Vegan sister project
+
+The goal is not to duplicate every specialized resource on the internet.
+Zerra provides context for **what a resource is, why it is useful, and
+where to continue learning**.
+
+------------------------------------------------------------------------
+
+## 🛍️ Stores & Community Access
+
+Zerra does not treat buying a new "green" product as the default
+solution.
+
+The Stores experience emphasizes options such as:
+
+-   secondhand
+-   refurbished
+-   reuse-oriented businesses
+-   repair
+-   refill
+-   borrowing and sharing
+-   libraries and Libraries of Things
+-   makerspaces
+-   community resources
+
+Sometimes the best store is not a store at all.
+
+When a purchase is genuinely necessary, Zerra helps users begin
+somewhere more intentional.
+
+------------------------------------------------------------------------
+
+## 🌟 Core Principles
+
+### There is no "away"
+
+Moving waste out of sight does not erase its material consequences.
+
+### Prevent waste before managing waste
+
+Refusal, reduction, reuse, repair, sharing, and recovery can prevent
+materials from becoming waste in the first place.
+
+### Zero waste is a direction, not perfection
+
+Real people have budgets, time constraints, disabilities, rental
+restrictions, different infrastructure, and different local options.
+
+### Verify the claim
+
+Environmental information should be inspectable. Zerra connects claims
+with context and sources wherever practical.
+
+### Personal and systemic responsibility can coexist
+
+Individual choices matter inside larger systems. Institutional and
+producer decisions also shape what choices are available.
+
+### Present options, not purity tests
+
+The useful question is not whether someone can become perfectly
+waste-free. It is what better action is realistically available in the
+situation they are facing.
 
 ### Local reality matters
 
-Recycling programs, composting services, hazardous-waste rules, donation
-options, and disposal requirements differ by location.
+Recycling programs, composting services, repair options, donation
+systems, hazardous-waste rules, and recovery infrastructure vary by
+location.
+
+------------------------------------------------------------------------
+
+## 🧭 Application Map
+
+``` text
+HOME
+├── Consequence-first introduction
+├── Waste context
+├── Essential Viewing
+├── What's Your Excuse?
+└── First actions
+
+WHY CARE?
+└── Practical reasons waste matters
+
+LEARN
+└── Understand the material and waste systems
+
+RECONNECT
+└── Stewardship · Reciprocity · Responsibility
+
+ACT
+├── Prevent
+├── Reuse / Repair / Share
+├── Recover
+├── Compost / Grow / Return / Conserve
+├── Recycle correctly
+└── Find resources near you
+
+EVIDENCE
+└── Claims · Context · Data · Original sources
+
+RESOURCES
+├── Films
+├── Organizations
+├── Guides
+├── Books and deeper learning
+├── Digital resources
+├── Systems & Futures
+└── Go Vegan
+
+STORES
+├── Secondhand
+├── Refurbished
+├── Lower-waste destinations
+└── Community access
+
+ABOUT
+└── Purpose · Method · Philosophy
+```
 
 ------------------------------------------------------------------------
 
 ## 🛠️ Tech Stack
 
-Zerra is built with lightweight browser-native technologies.
+Zerra is built as a lightweight client-side web application using
+browser-native technologies.
 
 ### Frontend
 
 -   HTML5
--   Tailwind CSS
--   Alpine.js
--   Custom CSS
+-   CSS
 -   JavaScript
--   Lightweight SVG icons
+-   Alpine.js
+-   lightweight interface assets
 
-### Browser Storage
+### Architecture
 
--   LocalStorage API
+Zerra is designed to be:
 
-### Architecture Goals
-
--   lightweight
 -   responsive
--   privacy-friendly
--   browser-native
+-   dark-theme focused
 -   client-side
--   no account required
--   no backend required
--   easy to host
+-   static-host friendly
+-   easy to inspect
 -   easy to fork
--   open-source
+-   open source
+-   usable without an account or application backend
 
-The core application is designed as a portable single-file web app.
+The kodeWeave project export is self-contained and includes embedded
+application assets.
 
 ------------------------------------------------------------------------
 
 ## 🔒 Privacy
 
-Zerra does not require an account to use the core app.
+Zerra does not require an account to use the core application.
 
-User preferences, progress, and supported interface state are stored
-locally in the browser using LocalStorage.
+The project is intentionally client-side and does not require users to
+create a profile simply to access its environmental education and
+resources.
 
-The project is designed to provide useful sustainability guidance
-without requiring users to surrender personal information simply to
-access it.
+External resources, videos, maps, and linked services have their own
+privacy policies and data practices.
 
 ------------------------------------------------------------------------
 
 ## 🚀 Launch Zerra
 
-➡️ **https://michaelsboost.com/Zerra**
+**https://michaelsboost.com/Zerra/**
 
 ------------------------------------------------------------------------
 
@@ -506,71 +532,67 @@ GitHub Pages or another static hosting provider.
 
 ## ⚠️ Local Disposal & Safety Notice
 
-Waste, recycling, composting, donation, and disposal rules vary by
-location.
+Waste, recycling, composting, donation, recovery, and disposal rules
+vary by location.
 
 Some materials --- including batteries, electronics, chemicals, paint,
 medications, sharp objects, pressurized containers, and other
 potentially hazardous materials --- may require special handling.
 
-Zerra provides general educational guidance. Users should verify current
-local requirements and follow official safety instructions when handling
-regulated or hazardous materials.
+Zerra provides general educational guidance. Verify current local
+requirements and follow official safety instructions when handling
+regulated, hazardous, or location-dependent materials.
 
 ------------------------------------------------------------------------
 
 ## 🤝 Contributing
 
-Pull requests, corrections, accessibility improvements, new
-alternatives, expanded guides, and carefully researched data are
-welcome.
+Pull requests, corrections, accessibility improvements, source updates,
+resource additions, and carefully researched environmental information
+are welcome.
 
 Useful contribution areas include:
 
--   additional everyday items
--   no-purchase approaches
--   repair techniques
--   reuse and repurposing ideas
--   DIY alternatives
--   traditional practices
--   secondhand options
--   composting guidance
--   recycling guidance
--   responsible-disposal guidance
--   gardening
--   food growing
--   food preservation
--   regional information
--   accessibility
--   mobile optimization
+-   correcting or strengthening factual claims
+-   adding primary or authoritative sources
+-   accessibility improvements
+-   responsive-layout improvements
+-   repair and reuse resources
+-   composting and recovery resources
+-   local-resource discovery
+-   responsible recycling and disposal guidance
+-   community resources
+-   secondhand and refurbished resources
+-   Indigenous-source corrections or improvements
 -   translations
 -   performance improvements
 
-Contributions should favor practical usefulness over encouraging
-unnecessary purchases.
+When contributing factual claims, distinguish evidence from
+interpretation and include reliable sources whenever appropriate.
 
-When adding factual claims, safety guidance, or location-dependent
-disposal information, reliable sources should be included whenever
-appropriate.
+Culturally specific knowledge should be attributed carefully rather than
+generalized across peoples or traditions.
 
 ------------------------------------------------------------------------
 
-## 💖 Support
+## 💖 Support Zerra
 
-Zerra is an independent open-source project built to make lower-waste,
-lower-consumption, more resilient living easier to understand and
-practice.
+Zerra is an independent open-source project built to make environmental
+consequences easier to understand, evidence easier to verify, and
+practical action easier to find.
 
-If you find the project useful or worth supporting:
+If you find the project useful:
 
 -   ⭐ Star the repository
 -   📢 Share Zerra
--   🧠 Contribute ideas, corrections, or knowledge
+-   🧠 Contribute corrections, sources, or knowledge
 -   🛠️ Submit improvements
 -   💸 Support development: https://michaelsboost.com/donate
+-   👕 Zerra apparel:
+    https://michaelsboost-store.creator-spring.com/listing/zerra-unplug-from-the-system
 
 Support helps fund continued development, research, testing,
-accessibility improvements, and future open-source tools.
+accessibility improvements, and future open-source work.
 
 ------------------------------------------------------------------------
 
@@ -578,7 +600,7 @@ accessibility improvements, and future open-source tools.
 
 Zerra is open-source software licensed under the MIT License.
 
-See: [LICENSE](LICENSE)
+See [LICENSE](LICENSE).
 
 ------------------------------------------------------------------------
 

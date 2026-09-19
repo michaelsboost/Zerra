@@ -18,16 +18,15 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Zerra — There Is No Away" />
     <meta property="og:description" content="Zerra is an evidence-led environmental action hub for understanding waste, reconnecting with responsibility, taking practical action, and finding trusted resources for lower-waste and more sustainable living." />
-    <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/x-icon" href="imgs/logo.svg">
     <link rel="icon" type="image/svg+xml" href="imgs/logo.svg" />
     <link rel="apple-touch-icon" href="imgs/logo.svg">
-    <link rel="stylesheet" href="dist/bundle.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js" defer></script>
   
+    <link rel="stylesheet" href="src/bundle.css">
   </head>
   <body>
-    
+
 <div class="app">
  <!-- Application header and primary navigation -->
  <header class="site-header">
@@ -2703,29 +2702,7 @@
 </div>
 
 
-    <script src="dist/script.js"></script>
-    <script src="https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').then(reg => {
-          reg.addEventListener('updatefound', () => {
-            const newSW = reg.installing;
-            newSW.addEventListener('statechange', () => {
-              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                // Notify the user and reload if they confirm
-                if (confirm('A new version is available. Reload now?')) {
-                  window.location.reload();
-                }
-              }
-            });
-          });
-        });
 
-        // Ensure immediate activation of a new service worker
-        navigator.serviceWorker.ready.then(registration => {
-          registration.active.postMessage({ type: 'SKIP_WAITING' });
-        });
-      }
-    </script>
+<script src="dist/script.js"></script>
   </body>
 </html>

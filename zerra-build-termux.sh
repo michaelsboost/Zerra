@@ -11,8 +11,8 @@ fi
 command -v node >/dev/null 2>&1 || { echo "Error: Node.js is required." >&2; exit 1; }
 command -v npm >/dev/null 2>&1 || { echo "Error: npm is required." >&2; exit 1; }
 
-# Android/Termux can fail when npm installs executable shims on shared storage.
-# Build in Termux private storage there; everywhere else build in-place.
+# Android shared storage does not support the symlinks npm creates in node_modules/.bin.
+# Under Termux, build from private storage and copy dist back to the project.
 if [[ "${PREFIX:-}" == /data/data/com.termux/files/usr* ]]; then
   for cmd in rsync sha256sum; do
     command -v "$cmd" >/dev/null 2>&1 || {
