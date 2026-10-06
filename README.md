@@ -189,15 +189,21 @@ Inclusion is not an endorsement of a political or economic model. The
 purpose is to give users credible starting points for investigating
 different approaches and their assumptions.
 
-### Go Vegan companion project
+### Companion projects
 
-Zerra and [Go Vegan](https://michaelsboost.com/govegan/) are separate
-open-source projects with complementary purposes.
+Zerra is part of a small group of separate open-source projects with
+complementary purposes. Each project stays focused on its own subject while
+providing a clear path into related learning.
 
-Zerra focuses on waste, ecological responsibility, material systems, and
-practical environmental action. Go Vegan focuses specifically on animal
-exploitation and the consequences of treating animals as products,
-including environmental dimensions of food and production systems.
+- **[Go Vegan](https://michaelsboost.com/govegan/)** focuses specifically on
+  animals, animal use, ethics, evidence, alternatives, and practical vegan
+  living, including environmental dimensions of food and production systems.
+- **[Urban Forager](https://michaelsboost.com/Urban-Forager/)** takes Zerra's ideas of reconnection,
+  stewardship, and reciprocity into the field. It focuses on wild plant and
+  fungi identification, food and nutrition, ethnobotany, traditional and
+  modern uses, safety, and responsible foraging.
+
+Source: https://github.com/michaelsboost/Urban-Forager
 
 ------------------------------------------------------------------------
 
@@ -331,7 +337,7 @@ Resource categories can include:
 -   digital and open-source alternatives
 -   community resources
 -   systems and futures
--   the Go Vegan sister project
+-   companion projects including Go Vegan and Urban Forager
 
 The goal is not to duplicate every specialized resource on the internet.
 Zerra provides context for **what a resource is, why it is useful, and
@@ -420,7 +426,8 @@ LEARN
 └── Understand the material and waste systems
 
 RECONNECT
-└── Stewardship · Reciprocity · Responsibility
+├── Stewardship · Reciprocity · Responsibility
+└── Urban Forager field-learning handoff
 
 ACT
 ├── Prevent
@@ -440,7 +447,9 @@ RESOURCES
 ├── Books and deeper learning
 ├── Digital resources
 ├── Systems & Futures
-└── Go Vegan
+└── Companion projects
+    ├── Go Vegan
+    └── Urban Forager
 
 STORES
 ├── Secondhand
