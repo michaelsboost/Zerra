@@ -3110,7 +3110,11 @@ body.zerra-menu-open {
   box-sizing:border-box !important;
 }
 </style>
-  </head>
+  
+<style>
+.zerra-support-links button{align-items:center;background:#0d120e;border:1px solid rgba(255,255,255,.07);cursor:pointer;display:flex;font:inherit;gap:12px;justify-content:space-between;padding:11px 10px;text-align:left;width:100%}.zerra-support-links button:hover,.zerra-support-links button:focus-visible{background:#111a13;border-color:rgba(199,255,138,.28)}
+</style>
+</head>
   <body>
 <div class="app">
  <!-- Application header and primary navigation -->
@@ -3241,6 +3245,14 @@ body.zerra-menu-open {
     </button>
    </nav>
    <div class="zerra-support-links">
+    <button id="shareAppBtn" type="button">
+     <span>
+      SHARE
+     </span>
+     <strong>
+      Share Zerra ↗
+     </strong>
+    </button>
     <a href="https://michaelsboost.com/donate" rel="noopener" target="_blank">
      <span>
       SUPPORT
@@ -6124,6 +6136,20 @@ document.addEventListener("click",function(e){
  });
 })();
 
+
+(function(){
+ const button=document.getElementById("shareAppBtn");
+ if(!button)return;
+ const label=button.querySelector("strong");
+ const defaultLabel=label?label.textContent:"Share Zerra ↗";
+ let resetTimer;
+ function showStatus(message){if(!label)return;label.textContent=message;clearTimeout(resetTimer);resetTimer=setTimeout(()=>{label.textContent=defaultLabel},2200);}
+ button.addEventListener("click",async()=>{
+  const shareData={title:"Zerra",text:"Zerra — learn where things go, why waste matters, and what you can do next.",url:window.location.href};
+  if(navigator.share){try{await navigator.share(shareData);return;}catch(error){if(error&&error.name==="AbortError")return;}}
+  try{await navigator.clipboard.writeText(shareData.url);showStatus("Link copied ✓");}catch(_){window.prompt("Copy this link to share Zerra:",shareData.url);}
+ });
+})();
 </script>
   </body>
 </html>

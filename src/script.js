@@ -292,3 +292,39 @@ document.addEventListener("click",function(e){
   if(empty)empty.hidden=shown!==0;
  });
 })();
+
+(function(){
+ const button=document.getElementById("shareAppBtn");
+ if(!button)return;
+ const label=button.querySelector("strong");
+ const defaultLabel=label?label.textContent:"Share Zerra ↗";
+ let resetTimer;
+ function showStatus(message){
+  if(!label)return;
+  label.textContent=message;
+  clearTimeout(resetTimer);
+  resetTimer=setTimeout(()=>{label.textContent=defaultLabel},2200);
+ }
+ button.addEventListener("click",async()=>{
+  const shareData={
+   title:"Zerra",
+   text:"Zerra — learn where things go, why waste matters, and what you can do next.",
+   url:window.location.href
+  };
+  if(navigator.share){
+   try{
+    await navigator.share(shareData);
+    return;
+   }catch(error){
+    if(error && error.name==="AbortError")return;
+   }
+  }
+  try{
+   await navigator.clipboard.writeText(shareData.url);
+   showStatus("Link copied ✓");
+  }catch(_){
+   window.prompt("Copy this link to share Zerra:",shareData.url);
+  }
+ });
+})();
+

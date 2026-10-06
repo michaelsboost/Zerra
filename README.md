@@ -159,6 +159,13 @@ as:
 Each response connects a quick explanation with evidence, sources,
 deeper context, practical action, and related viewing.
 
+### Share Zerra
+
+Zerra can now be shared directly from the application. On supported devices,
+the **Share Zerra** action opens the native share sheet using the Web Share API.
+When native sharing is unavailable, Zerra falls back to copying the current
+link so it can still be shared easily.
+
 ### Local resource discovery
 
 The Act and Stores experiences help users look beyond disposal and new

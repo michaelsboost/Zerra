@@ -2443,7 +2443,8 @@ body.zerra-menu-open {
   border-top:1px solid rgba(255,255,255,.08)
 }
 
-.zerra-support-links a {
+.zerra-support-links a,
+.zerra-support-links button {
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -2452,6 +2453,19 @@ body.zerra-menu-open {
   text-decoration:none;
   border:1px solid rgba(255,255,255,.07);
   background:#0d120e
+}
+
+.zerra-support-links button {
+  width:100%;
+  font:inherit;
+  text-align:left;
+  cursor:pointer
+}
+
+.zerra-support-links button:hover,
+.zerra-support-links button:focus-visible {
+  border-color:rgba(199,255,138,.28);
+  background:#111a13
 }
 
 .zerra-support-links span {
